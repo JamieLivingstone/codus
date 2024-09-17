@@ -1,12 +1,17 @@
 {
 	"name": "codus",
-	"description": "",
 	"scripts": {
-		"check": "biome check . --fix"
+		"prepare": "lefthook install",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"check": "biome check --write ."
 	},
 	"author": "Jamie Livingstone",
 	"license": "MIT",
 	"devDependencies": {
-		"@biomejs/biome": "1.9.1"
+		"@biomejs/biome": "1.9.1",
+		"@commitlint/cli": "^19.5.0",
+		"@commitlint/config-conventional": "^19.5.0",
+		"lefthook": "^1.7.15"
 	}
 }
