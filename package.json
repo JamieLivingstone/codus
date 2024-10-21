@@ -9,24 +9,38 @@
     "check": "biome check --write .",
     "preview": "vite preview",
     "tauri": "tauri",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "test": "vitest"
   },
   "dependencies": {
+    "@mantine/core": "^7.13.3",
+    "@mantine/hooks": "^7.13.3",
+    "@tabler/icons-react": "^3.19.0",
+    "@tanstack/react-router": "^1.74.5",
+    "@tauri-apps/api": ">=2.0.0",
+    "@tauri-apps/plugin-shell": ">=2.0.0",
+    "i18next": "^23.16.2",
+    "i18next-http-backend": "^2.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@tauri-apps/api": ">=2.0.0",
-    "@tauri-apps/plugin-shell": ">=2.0.0"
+    "react-i18next": "^15.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.3",
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@tauri-apps/cli": ">=2.0.0",
+    "@testing-library/react": "^16.0.1",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.2.1",
+    "jsdom": "^25.0.1",
     "lefthook": "^1.7.21",
+    "postcss": "^8.4.47",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "@tauri-apps/cli": ">=2.0.0"
+    "vitest": "^2.1.3"
   }
 }

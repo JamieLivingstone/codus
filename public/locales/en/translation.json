@@ -1,0 +1,13 @@
+{
+  "categories": {
+    "encoding": {
+      "name": "Encoding Tools"
+    }
+  },
+  "tools": {
+    "jwt-decoder": {
+      "name": "JWT Decoder",
+      "description": "Decode and verify JSON Web Tokens"
+    }
+  }
+}
