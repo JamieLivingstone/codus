@@ -8,6 +8,7 @@ export interface Tool {
   icon: React.ComponentType<IconProps>;
   path: string;
   component: React.LazyExoticComponent<React.ComponentType>;
+  tags: string[];
 }
 
 export interface ToolCategory {
@@ -30,6 +31,7 @@ export const toolCategories: ToolCategory[] = [
         icon: IconCode,
         path: '/encoding/jwt-decoder',
         component: React.lazy(() => import('./tools/encoding/jwt-decoder.tsx')),
+        tags: ['jwt', 'json web token', 'decode'],
       },
     ],
   },

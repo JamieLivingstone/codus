@@ -9,11 +9,12 @@ import {
   Text,
   useMantineColorScheme,
 } from '@mantine/core';
-import { IconBrandGithub, IconMoon, IconSun } from '@tabler/icons-react';
+import { IconBrandGithub, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
 import { Link, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { SpotlightSearch } from '../components/spotlight-search';
 import { toolCategories } from '../tools.ts';
 import classes from './app-layout.module.css';
 
@@ -46,6 +47,7 @@ export function AppLayout({ version }: AppLayoutProps) {
             <Code fw={700}>v{version}</Code>
           </Group>
           <Group>
+            <SpotlightSearch icon={<IconSearch size="1.2rem" />} />
             <ActionIcon
               variant="default"
               onClick={() => toggleColorScheme()}
