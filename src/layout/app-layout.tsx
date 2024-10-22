@@ -9,7 +9,7 @@ import {
   Text,
   useMantineColorScheme,
 } from '@mantine/core';
-import { IconBrandGithub, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
+import { IconBrandGithub, IconHome, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
 import { Link, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -41,12 +41,17 @@ export function AppLayout({ version }: AppLayoutProps) {
         <Group h="100%" px="md" justify="space-between">
           <Group>
             <Burger opened={mobileOpened} onClick={() => setMobileOpened((o) => !o)} hiddenFrom="sm" size="sm" />
-            <Text size="xl" fw="bold">
-              Codus
-            </Text>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Text size="xl" fw="bold">
+                Codus
+              </Text>
+            </Link>
             <Code fw={700}>v{version}</Code>
           </Group>
           <Group>
+            <ActionIcon variant="default" component={Link} to="/" size="lg" aria-label="Home">
+              <IconHome size="1.2rem" />
+            </ActionIcon>
             <SpotlightSearch icon={<IconSearch size="1.2rem" />} />
             <ActionIcon
               variant="default"

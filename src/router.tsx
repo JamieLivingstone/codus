@@ -2,7 +2,8 @@ import { createRootRoute, createRoute, createRouter } from '@tanstack/react-rout
 
 import { useAppVersion } from './hooks/use-app-version.ts';
 import { AppLayout } from './layout/app-layout.tsx';
-import { allTools } from './tools.ts';
+import { AllTools } from './pages/all-tools.tsx';
+import { tools } from './tools.ts';
 
 const rootRoute = createRootRoute({
   component: () => {
@@ -11,7 +12,13 @@ const rootRoute = createRootRoute({
   },
 });
 
-const toolRoutes = allTools.map((tool) =>
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: AllTools,
+});
+
+const toolRoutes = tools.map((tool) =>
   createRoute({
     getParentRoute: () => rootRoute,
     path: tool.path,
@@ -19,7 +26,7 @@ const toolRoutes = allTools.map((tool) =>
   }),
 );
 
-const routeTree = rootRoute.addChildren(toolRoutes);
+const routeTree = rootRoute.addChildren([indexRoute, ...toolRoutes]);
 
 export const router = createRouter({ routeTree });
 

@@ -11,9 +11,12 @@
     }
   },
   "tools": {
+    "all": {
+      "name": "All Tools",
+      "title": "All Tools"
+    },
     "jwt-decoder": {
-      "name": "JWT Decoder",
-      "description": "Decode and verify JSON Web Tokens"
+      "name": "JWT Decoder"
     }
   }
 }

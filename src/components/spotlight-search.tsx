@@ -5,9 +5,9 @@ import { useNavigate } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { allTools } from '../tools';
+import { tools } from '../tools';
 
-const actions: SpotlightActionData[] = allTools.map((tool) => ({
+const actions: SpotlightActionData[] = tools.map((tool) => ({
   id: tool.id,
   label: tool.nameKey,
   description: tool.descriptionKey,
@@ -33,7 +33,7 @@ export function SpotlightSearch({ icon }: SpotlightSearchProps) {
           ...action,
           label: t(action.label ?? ''),
           description: t(action.description ?? ''),
-          onClick: () => navigate({ to: allTools.find((tool) => tool.id === action.id)?.path ?? '/' }),
+          onClick: () => navigate({ to: tools.find((tool) => tool.id === action.id)?.path ?? '/' }),
         }))}
         nothingFound={t('components.spotlight-search.no-results')}
         highlightQuery
