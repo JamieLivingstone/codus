@@ -23,7 +23,8 @@ export default defineConfig(async () => ({
     },
   },
   test: {
-    environment: 'jsdom',
+    environment: 'happy-dom',
     globals: true,
+    setupFiles: './vitest-setup.ts',
   },
 }));

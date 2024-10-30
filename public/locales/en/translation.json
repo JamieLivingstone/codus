@@ -16,7 +16,8 @@
       "title": "All Tools"
     },
     "jwt-decoder": {
-      "name": "JWT Decoder"
+      "name": "JWT Decoder",
+      "description": "Decode a JSON Web Token (JWT)"
     }
   }
 }
