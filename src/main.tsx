@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom/client';
 import '@mantine/core/styles.css';
 import '@mantine/spotlight/styles.css';
 
-import { router } from './router.tsx';
-import './i18n.ts';
+import { router } from './router';
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

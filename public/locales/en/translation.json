@@ -1,4 +1,8 @@
 {
+  "common": {
+    "clear": "Clear",
+    "paste": "Paste"
+  },
   "components": {
     "spotlight-search": {
       "placeholder": "Search...",
@@ -7,7 +11,7 @@
   },
   "categories": {
     "encoding": {
-      "name": "Encoding Tools"
+      "name": "Encoders / Decoders"
     }
   },
   "tools": {
@@ -17,7 +21,10 @@
     },
     "jwt-decoder": {
       "name": "JWT Decoder",
-      "description": "Decode a JSON Web Token (JWT)"
+      "description": "Decode a JSON Web Token (JWT)",
+      "input-placeholder": "Enter JWT token",
+      "header": "Header",
+      "claims": "Claims"
     }
   }
 }

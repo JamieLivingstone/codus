@@ -1,7 +1,7 @@
 import { IconBraces, IconKey, type IconProps } from '@tabler/icons-react';
 import React from 'react';
 
-export interface Tool {
+export type Tool = {
   id: string;
   nameKey: string;
   descriptionKey: string;
@@ -9,14 +9,14 @@ export interface Tool {
   path: string;
   component: React.LazyExoticComponent<React.ComponentType>;
   tags: string[];
-}
+};
 
-export interface ToolCategory {
+export type ToolCategory = {
   id: string;
   nameKey: string;
   icon: React.ComponentType<IconProps>;
   tools: Tool[];
-}
+};
 
 export const toolCategories: ToolCategory[] = [
   {
@@ -30,7 +30,7 @@ export const toolCategories: ToolCategory[] = [
         descriptionKey: 'tools.jwt-decoder.description',
         icon: IconKey,
         path: '/encoding/jwt-decoder',
-        component: React.lazy(() => import('./tools/encoding/jwt-decoder.tsx')),
+        component: React.lazy(() => import('./tools/encoding/jwt-decoder')),
         tags: ['jwt', 'json web token', 'decode'],
       },
     ],

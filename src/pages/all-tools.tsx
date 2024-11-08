@@ -2,7 +2,7 @@ import { Card, Container, Group, SimpleGrid, Text, rem } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { tools } from '../tools.ts';
+import { tools } from '../tools';
 
 export function AllTools() {
   const { t } = useTranslation();

@@ -15,7 +15,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { SpotlightSearch } from '../components/spotlight-search';
-import { toolCategories } from '../tools.ts';
+import { toolCategories } from '../tools';
 import classes from './app-layout.module.css';
 
 interface AppLayoutProps {

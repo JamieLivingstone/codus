@@ -1,9 +1,9 @@
 import { createRootRoute, createRoute, createRouter } from '@tanstack/react-router';
 
-import { useAppVersion } from './hooks/use-app-version.ts';
-import { AppLayout } from './layout/app-layout.tsx';
-import { AllTools } from './pages/all-tools.tsx';
-import { tools } from './tools.ts';
+import { useAppVersion } from './hooks/use-app-version';
+import { AppLayout } from './layout/app-layout';
+import { AllTools } from './pages/all-tools';
+import { tools } from './tools';
 
 const rootRoute = createRootRoute({
   component: () => {
