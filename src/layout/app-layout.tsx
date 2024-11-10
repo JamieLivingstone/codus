@@ -59,7 +59,11 @@ export function AppLayout({ version }: AppLayoutProps) {
               size="lg"
               aria-label="Toggle color scheme"
             >
-              {colorScheme === 'dark' ? <IconSun size="1.2rem" /> : <IconMoon size="1.2rem" />}
+              {colorScheme === 'dark' ? (
+                <IconSun data-testid="toggle-light" size="1.2rem" />
+              ) : (
+                <IconMoon data-testid="toggle-dark" size="1.2rem" />
+              )}
             </ActionIcon>
             <ActionIcon
               variant="default"

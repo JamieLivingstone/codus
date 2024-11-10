@@ -1,11 +1,9 @@
 import { MantineProvider } from '@mantine/core';
-import { RouterProvider, createRootRoute, createRoute, createRouter } from '@tanstack/react-router';
+import { Outlet, RouterProvider, createRootRoute, createRoute, createRouter } from '@tanstack/react-router';
 import { type RenderOptions, type RenderResult, act, render } from '@testing-library/react';
 import i18n from 'i18next';
 import type { ReactElement, ReactNode } from 'react';
 import { initReactI18next } from 'react-i18next';
-
-import { AppLayout } from '../layout/app-layout';
 
 i18n.use(initReactI18next).init({
   lng: 'en',
@@ -20,7 +18,7 @@ i18n.use(initReactI18next).init({
 async function customRender(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
   const TestProviders = ({ children }: { children: ReactNode }) => {
     const rootRoute = createRootRoute({
-      component: () => <AppLayout version={'0.0.0'} />,
+      component: () => <Outlet />,
     });
 
     const indexRoute = createRoute({
