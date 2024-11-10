@@ -7,17 +7,21 @@ Codus is an offline, privacy-focused desktop application designed to boost devel
 ## Key Features
 
 - **Offline-First**: Codus operates entirely offline, with no need for an internet connection.
-- **AI-Powered Assistance**: Download, manage, and run AI models directly within Codus. We support models from HuggingFace and run them using Llama CPP2, enabling you to benefit from AI code assistance fully offline.
-- **Cross-Platform Compatibility**: Runs seamlessly on Windows, macOS, and Linux.
+- **AI-Powered Assistance**: Download, manage and run AI models directly within Codus. We support models from HuggingFace and run them using Llama CPP2, enabling you to benefit from AI code assistance fully offline.
+- **Cross-Platform Compatibility**: Runs seamlessly on Windows, macOS and Linux.
 - **Privacy-Centric**: Your data stays local—nothing is transmitted online, ensuring complete control and confidentiality.
-- **Built with Rust**: Leverages Rust for high performance, safety, and reliability.
+- **Built with Rust**: Leverages Rust for high performance, safety and reliability.
 
 ## Available Tools
 
-Codus includes a growing set of developer tools designed to streamline your workflow:
+<details>
+<summary><strong>Encoding Tools</strong></summary>
 
-- **Local Large Language Model (LLM)**: Get intelligent code suggestions and assistance from AI models. Codus lets you download, manage, and run these models offline using Llama CPP2, with full support for HuggingFace models.
-- **Additional tools coming soon...** (📌 *Stay tuned for updates!*)
+- **JWT Decoder**: Decode and inspect JWT tokens.
+
+</details>
+
+
 
 ## Getting Started
 
@@ -33,7 +37,7 @@ We welcome contributions from the community! Here's how to get started:
 
 1. Make sure you have [NVM](https://github.com/nvm-sh/nvm) and [Rust](https://www.rust-lang.org/tools/install) installed.
 2. We use [Biome](https://biomejs.dev/) for code linting and formatting.
-3. Read our [CONTRIBUTING.md](CONTRIBUTING.md) for a detailed guide on our development process, coding standards, and how to submit pull requests.
+3. Read our [CONTRIBUTING.md](CONTRIBUTING.md) for a detailed guide on our development process, coding standards and how to submit pull requests.
 
 Feel free to contribute to Codus, whether it's through bug fixes, new features, or improvements to documentation!
 
@@ -47,4 +51,4 @@ If you encounter issues or have suggestions, please file an issue on our [GitHub
 
 ---
 
-Codus is your all-in-one developer toolkit—enhanced by AI, built with privacy in mind, and optimized for performance.
+Codus is your all-in-one developer toolkit—enhanced by AI, built with privacy in mind and optimized for performance.
