@@ -1,6 +1,7 @@
 {
   "common": {
     "clear": "Clear",
+    "download": "Download",
     "paste": "Paste"
   },
   "components": {
@@ -12,6 +13,9 @@
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"
+    },
+    "llm": {
+      "name": "LLM"
     }
   },
   "tools": {
@@ -25,6 +29,11 @@
       "input-placeholder": "Enter JWT token",
       "header": "Header",
       "claims": "Claims"
+    },
+    "manage-models": {
+      "name": "Manage Models",
+      "description": "Manage your downloaded models",
+      "title": "Manage Models"
     }
   }
 }

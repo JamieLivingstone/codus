@@ -1,4 +1,4 @@
-import { IconBraces, IconKey, type IconProps } from '@tabler/icons-react';
+import { IconBraces, IconBrain, IconDownload, IconKey, type IconProps } from '@tabler/icons-react';
 import React from 'react';
 
 export type Tool = {
@@ -32,6 +32,22 @@ export const toolCategories: ToolCategory[] = [
         path: '/encoding/jwt-decoder',
         component: React.lazy(() => import('./tools/encoding/jwt-decoder')),
         tags: ['jwt', 'json web token', 'decode'],
+      },
+    ],
+  },
+  {
+    id: 'llm',
+    nameKey: 'categories.llm.name',
+    icon: IconBrain,
+    tools: [
+      {
+        id: 'manage-models',
+        nameKey: 'tools.manage-models.name',
+        descriptionKey: 'tools.manage-models.description',
+        icon: IconDownload,
+        path: '/llm/manage-models',
+        component: React.lazy(() => import('./tools/llm/manage-models')),
+        tags: ['llm', 'model', 'download'],
       },
     ],
   },
