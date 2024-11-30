@@ -33,7 +33,11 @@
     "manage-models": {
       "name": "Manage Models",
       "description": "Manage your downloaded models",
-      "title": "Manage Models"
+      "title": "Manage Models",
+      "errors": {
+        "list-title": "Error Listing Models",
+        "list-message": "There was an error retrieving the list of models. Please try again later. If this issue persists, consider opening an issue on our GitHub repository."
+      }
     }
   }
 }

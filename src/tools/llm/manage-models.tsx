@@ -1,4 +1,5 @@
 import { Button, Card, Container, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { invoke } from '@tauri-apps/api/core';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,20 +21,21 @@ export default function ManageModels() {
   const [models, setModels] = useState<Model[]>([]);
 
   useEffect(() => {
-    try {
-      invoke<Model[]>('list_models').then(setModels);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
+    const fetchModels = async () => {
+      try {
+        const fetchedModels = await invoke<Model[]>('list_models');
+        setModels(fetchedModels);
+      } catch (error) {
+        notifications.show({
+          title: t('tools.manage-models.errors.list-title'),
+          message: t('tools.manage-models.errors.list-message'),
+          color: 'red',
+        });
+      }
+    };
 
-  const handleDownload = async (name: string) => {
-    const model = models.find((model) => model.name === name);
-    if (!model) return;
-
-    const result = await invoke('download_model', { model });
-    console.log(result);
-  };
+    fetchModels();
+  }, [t]);
 
   return (
     <Container size="xl">
@@ -50,7 +52,7 @@ export default function ManageModels() {
                   </Text>
                 </Group>
 
-                <Button onClick={() => handleDownload(model.name)}>{t('common.download')}</Button>
+                <Button onClick={() => invoke('download_model', { model })}>{t('common.download')}</Button>
               </Stack>
             </Card>
           ))}
