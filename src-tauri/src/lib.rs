@@ -9,7 +9,6 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             encoding::decode_jwt,
             llm::download_model,
-            llm::list_models,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

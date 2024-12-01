@@ -1,41 +1,25 @@
-import { Button, Card, Container, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
-import { invoke } from '@tauri-apps/api/core';
+import { Button, Card, Container, Group, Progress, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { listen } from '@tauri-apps/api/event';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type HuggingFaceModelSource = {
-  repo: string;
-  tensor_path: string;
-};
-
-type ModelSource = HuggingFaceModelSource;
-
-type Model = {
-  name: string;
-  source: ModelSource;
-};
+import { useModelContext } from '../../hooks/use-model';
 
 export default function ManageModels() {
   const { t } = useTranslation();
-  const [models, setModels] = useState<Model[]>([]);
+  const { downloadModel, models } = useModelContext();
+  const [downloadProgress, setDownloadProgress] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const fetchedModels = await invoke<Model[]>('list_models');
-        setModels(fetchedModels);
-      } catch (error) {
-        notifications.show({
-          title: t('tools.manage-models.errors.list-title'),
-          message: t('tools.manage-models.errors.list-message'),
-          color: 'red',
-        });
-      }
-    };
+    const removeListener = listen<[string, number]>('model-download-progress', (event) => {
+      const [modelName, progress] = event.payload;
+      setDownloadProgress((prev) => ({ ...prev, [modelName]: progress }));
+    });
 
-    fetchModels();
-  }, [t]);
+    return () => {
+      removeListener.then((f) => f());
+    };
+  }, []);
 
   return (
     <Container size="xl">
@@ -47,12 +31,13 @@ export default function ManageModels() {
               <Stack>
                 <Group>
                   <Text fw={500}>{model.name}</Text>
-                  <Text fz="xs" c="dimmed">
-                    Unknown MB
-                  </Text>
                 </Group>
 
-                <Button onClick={() => invoke('download_model', { model })}>{t('common.download')}</Button>
+                {downloadProgress[model.name] !== undefined && (
+                  <Progress value={downloadProgress[model.name]} size="xl" radius="xl" />
+                )}
+
+                <Button onClick={() => downloadModel(model)}>{t('common.download')}</Button>
               </Stack>
             </Card>
           ))}

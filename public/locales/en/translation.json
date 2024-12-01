@@ -1,6 +1,9 @@
 {
   "common": {
     "clear": "Clear",
+    "errors": {
+      "offline-message": "You are offline. Please check your internet connection and try again."
+    },
     "download": "Download",
     "paste": "Paste"
   },
@@ -18,6 +21,14 @@
       "name": "LLM"
     }
   },
+  "hooks": {
+    "use-model": {
+      "errors": {
+        "download-failed-title": "Error Downloading Model",
+        "download-failed-message": "There was an error downloading the model. Please try again later. If this issue persists, consider opening an issue on our GitHub repository."
+      }
+    }
+  },
   "tools": {
     "all": {
       "name": "All Tools",
@@ -33,11 +44,7 @@
     "manage-models": {
       "name": "Manage Models",
       "description": "Manage your downloaded models",
-      "title": "Manage Models",
-      "errors": {
-        "list-title": "Error Listing Models",
-        "list-message": "There was an error retrieving the list of models. Please try again later. If this issue persists, consider opening an issue on our GitHub repository."
-      }
+      "title": "Manage Models"
     }
   }
 }
