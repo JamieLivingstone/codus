@@ -1,25 +1,11 @@
-import { Button, Card, Container, Group, Progress, SimpleGrid, Stack, Text, Title } from '@mantine/core';
-import { listen } from '@tauri-apps/api/event';
-import { useEffect, useState } from 'react';
+import { Button, Card, Container, Group, SemiCircleProgress, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 
 import { useModelContext } from '../../hooks/use-model';
 
 export default function ManageModels() {
   const { t } = useTranslation();
-  const { downloadModel, models } = useModelContext();
-  const [downloadProgress, setDownloadProgress] = useState<Record<string, number>>({});
-
-  useEffect(() => {
-    const removeListener = listen<[string, number]>('model-download-progress', (event) => {
-      const [modelName, progress] = event.payload;
-      setDownloadProgress((prev) => ({ ...prev, [modelName]: progress }));
-    });
-
-    return () => {
-      removeListener.then((f) => f());
-    };
-  }, []);
+  const { downloadModel, deleteModel, models } = useModelContext();
 
   return (
     <Container size="xl">
@@ -33,11 +19,15 @@ export default function ManageModels() {
                   <Text fw={500}>{model.name}</Text>
                 </Group>
 
-                {downloadProgress[model.name] !== undefined && (
-                  <Progress value={downloadProgress[model.name]} size="xl" radius="xl" />
+                {model.state.isDownloading && <SemiCircleProgress value={model.state.downloadPercentage} />}
+
+                {!model.state.isDownloaded && (
+                  <Button onClick={() => downloadModel(model)} disabled={model.state.isDownloading}>
+                    {t('common.download')}
+                  </Button>
                 )}
 
-                <Button onClick={() => downloadModel(model)}>{t('common.download')}</Button>
+                {model.state.isDownloaded && <Button onClick={() => deleteModel(model)}>{t('common.delete')}</Button>}
               </Stack>
             </Card>
           ))}

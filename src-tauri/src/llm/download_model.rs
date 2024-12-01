@@ -25,8 +25,6 @@ pub async fn download_model(app: AppHandle, model: Model) -> Result<PathBuf, Str
         return Ok(file_path);
     }
 
-    app.emit("model-download-started", &model.name).unwrap();
-
     // Helper function to clean up file on error
     let cleanup = |file_path: &PathBuf| {
         if file_path.exists() {
@@ -56,6 +54,7 @@ pub async fn download_model(app: AppHandle, model: Model) -> Result<PathBuf, Str
 
             let total_size = response.content_length().unwrap_or(0);
             let mut downloaded = 0u64;
+            let mut last_percentage = 0;
 
             fs::create_dir_all(&models_dir)
                 .map_err(|e| format!("Failed to create models directory: {e}"))?;
@@ -84,21 +83,21 @@ pub async fn download_model(app: AppHandle, model: Model) -> Result<PathBuf, Str
                 }
 
                 downloaded += chunk.len() as u64;
-                app.emit(
-                    "model-download-progress",
-                    &(
-                        model.name.clone(),
-                        (downloaded as f64 / total_size as f64) * 100.0,
-                    ),
-                )
-                .unwrap();
+                let current_percentage = ((downloaded as f64 / total_size as f64) * 100.0) as i32;
+
+                if current_percentage > last_percentage {
+                    app.emit(
+                        "model-download-progress",
+                        &(model.name.clone(), current_percentage as f64),
+                    )
+                    .unwrap();
+                    last_percentage = current_percentage;
+                }
             }
 
             file_path
         }
     };
-
-    app.emit("model-download-completed", &model.name).unwrap();
 
     Ok(model_path)
 }

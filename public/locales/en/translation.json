@@ -1,10 +1,11 @@
 {
   "common": {
     "clear": "Clear",
+    "delete": "Delete",
+    "download": "Download",
     "errors": {
       "offline-message": "You are offline. Please check your internet connection and try again."
     },
-    "download": "Download",
     "paste": "Paste"
   },
   "components": {
@@ -24,6 +25,8 @@
   "hooks": {
     "use-model": {
       "errors": {
+        "download-success-title": "Model Downloaded",
+        "download-success-message": "{{name}} has been downloaded successfully.",
         "download-failed-title": "Error Downloading Model",
         "download-failed-message": "There was an error downloading the model. Please try again later. If this issue persists, consider opening an issue on our GitHub repository."
       }
