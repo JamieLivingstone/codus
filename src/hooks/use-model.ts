@@ -13,6 +13,8 @@ type ModelState = {
 
 type Model = {
   name: string;
+  author: string;
+  size: string;
   source: {
     type: 'HuggingFace';
     repo: string;
@@ -20,9 +22,17 @@ type Model = {
   };
 };
 
-const MODELS: Model[] = [
+const DEFAULT_STATE: ModelState = {
+  isDownloaded: false,
+  isDownloading: false,
+  downloadPercentage: 0,
+};
+
+export const MODELS: Model[] = [
   {
     name: 'Qwen2.5-1.5B-Instruct-GGUF',
+    author: 'Alibaba',
+    size: '1.5 GB',
     source: {
       type: 'HuggingFace',
       repo: 'Qwen/Qwen2.5-1.5B-Instruct-GGUF',
@@ -31,6 +41,8 @@ const MODELS: Model[] = [
   },
   {
     name: 'Qwen2.5-0.5B-Instruct-GGUF',
+    author: 'Alibaba',
+    size: '0.5 GB',
     source: {
       type: 'HuggingFace',
       repo: 'Qwen/Qwen2.5-0.5B-Instruct-GGUF',
@@ -44,6 +56,19 @@ export function useModel() {
   const [modelStates, setModelStates] = useState<Record<string, ModelState>>({});
 
   useEffect(() => {
+    const initializeModelStates = async () => {
+      const store = await load('saved-models.json');
+      const names = await store.keys();
+      const states = Object.fromEntries(
+        names.map((name) => [name, { ...DEFAULT_STATE, isDownloaded: true, downloadPercentage: 100 }]),
+      );
+      setModelStates((prev) => ({ ...prev, ...states }));
+    };
+
+    initializeModelStates();
+  }, []);
+
+  useEffect(() => {
     const unsubscribe = listen<[string, number]>('model-download-progress', ({ payload: [name, progress] }) => {
       setModelStates((prev) => ({
         ...prev,
@@ -51,34 +76,39 @@ export function useModel() {
       }));
     });
 
-    return () => unsubscribe.then((fn) => fn());
+    return () => {
+      unsubscribe.then((fn) => fn());
+    };
   }, []);
 
-  useEffect(() => {
-    load('saved-models.json').then(async (store) => {
-      const names = await store.keys();
-      const states = Object.fromEntries(
-        names.map((name) => [name, { isDownloaded: true, isDownloading: false, downloadPercentage: 100 }]),
-      );
-      setModelStates((prev) => ({ ...prev, ...states }));
-    });
-  }, []);
+  const updateModelState = (name: string, state: Partial<ModelState>) => {
+    setModelStates((prev) => ({
+      ...prev,
+      [name]: { ...prev[name], ...state },
+    }));
+  };
 
   const downloadModel = async (model: Model) => {
     try {
+      updateModelState(model.name, { isDownloading: true, downloadPercentage: 0 });
+
       const path = await invoke('download_model', { model });
       const store = await load('saved-models.json');
       await store.set(model.name, path);
-      setModelStates((prev) => ({
-        ...prev,
-        [model.name]: { isDownloaded: true, isDownloading: false, downloadPercentage: 100 },
-      }));
+
+      updateModelState(model.name, {
+        isDownloaded: true,
+        isDownloading: false,
+        downloadPercentage: 100,
+      });
+
       notifications.show({
         title: t('hooks.use-model.errors.download-success-title'),
         message: t('hooks.use-model.errors.download-success-message', { name: model.name }),
         color: 'green',
       });
     } catch {
+      updateModelState(model.name, DEFAULT_STATE);
       notifications.show({
         title: t('hooks.use-model.errors.download-failed-title'),
         message: t('hooks.use-model.errors.download-failed-message'),
@@ -91,10 +121,7 @@ export function useModel() {
     await invoke('delete_model', { model });
     const store = await load('saved-models.json');
     await store.delete(model.name);
-    setModelStates((prev) => ({
-      ...prev,
-      [model.name]: { isDownloaded: false, isDownloading: false, downloadPercentage: 0 },
-    }));
+    updateModelState(model.name, DEFAULT_STATE);
   };
 
   return {
@@ -102,7 +129,7 @@ export function useModel() {
     deleteModel,
     models: MODELS.map((model) => ({
       ...model,
-      state: modelStates[model.name] ?? { isDownloaded: false, isDownloading: false, downloadPercentage: 0 },
+      state: modelStates[model.name] ?? DEFAULT_STATE,
     })),
   };
 }

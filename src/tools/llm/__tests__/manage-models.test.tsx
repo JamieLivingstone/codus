@@ -1,43 +1,117 @@
 import { userEvent } from '@testing-library/user-event';
 
-import { type Model, ModelContext, type ModelContextType } from '../../../hooks/use-model';
+import { ModelContext, type ModelContextType } from '../../../hooks/use-model';
 import { render, screen } from '../../../test/test-utils';
 import ManageModels from '../manage-models';
 
 describe('manage-models', () => {
-  const models: Model[] = [
-    { name: 'model1', source: { type: 'HuggingFace', repo: 'repo1', tensor_path: 'tensor_path1' } },
-    { name: 'model2', source: { type: 'HuggingFace', repo: 'repo2', tensor_path: 'tensor_path2' } },
-  ];
+  let context: ModelContextType;
 
-  function renderWithContext(context: ModelContextType) {
-    return render(
+  beforeEach(() => {
+    context = {
+      models: [
+        {
+          name: 'model1',
+          author: 'author1',
+          size: '1GB',
+          state: { isDownloaded: true, isDownloading: false, downloadPercentage: 100 },
+          source: { type: 'HuggingFace', repo: 'repo1', tensor_path: 'tensor_path1' },
+        },
+        {
+          name: 'model2',
+          author: 'author2',
+          size: '2GB',
+          state: { isDownloaded: false, isDownloading: false, downloadPercentage: 0 },
+          source: { type: 'HuggingFace', repo: 'repo2', tensor_path: 'tensor_path2' },
+        },
+        {
+          name: 'model3',
+          author: 'author3',
+          size: '3GB',
+          state: { isDownloaded: false, isDownloading: true, downloadPercentage: 50 },
+          source: { type: 'HuggingFace', repo: 'repo3', tensor_path: 'tensor_path3' },
+        },
+      ],
+      downloadModel: vi.fn(),
+      deleteModel: vi.fn(),
+    };
+  });
+
+  it('lists all models with their details', async () => {
+    await render(
       <ModelContext.Provider value={context}>
         <ManageModels />
       </ModelContext.Provider>,
     );
-  }
 
-  it('lists models', async () => {
-    await renderWithContext({
-      models,
-      downloadModel: vi.fn(),
-    });
-
-    expect(screen.getByText('tools.manage-models.title')).toBeInTheDocument();
-    expect(screen.getByText('model1')).toBeInTheDocument();
-    expect(screen.getByText('model2')).toBeInTheDocument();
+    for (const model of context.models) {
+      expect(screen.getByText(model.name)).toBeInTheDocument();
+      expect(screen.getByText(`Author: ${model.author}`)).toBeInTheDocument();
+      expect(screen.getByText(`Size: ${model.size}`)).toBeInTheDocument();
+    }
   });
 
-  it('downloads the selected model', async () => {
-    const downloadModel = vi.fn();
-    await renderWithContext({ models, downloadModel });
+  it('shows the correct download progress when downloading a model', async () => {
+    await render(
+      <ModelContext.Provider value={context}>
+        <ManageModels />
+      </ModelContext.Provider>,
+    );
+
+    const downloadingModel = context.models[2];
+    expect(screen.getByText(`${downloadingModel.state.downloadPercentage}%`)).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+  });
+
+  it('shows download buttons only for non-downloaded models', async () => {
+    await render(
+      <ModelContext.Provider value={context}>
+        <ManageModels />
+      </ModelContext.Provider>,
+    );
 
     const downloadButtons = screen.getAllByRole('button', { name: 'common.download' });
-    await userEvent.click(downloadButtons[0]);
+    expect(downloadButtons).toHaveLength(1);
+    expect(downloadButtons[0]).toBeInTheDocument();
+  });
 
-    expect(downloadButtons.length).toEqual(models.length);
-    expect(downloadModel).toHaveBeenCalledTimes(1);
-    expect(downloadModel).toHaveBeenCalledWith(models[0]);
+  it('shows delete buttons only for downloaded models', async () => {
+    await render(
+      <ModelContext.Provider value={context}>
+        <ManageModels />
+      </ModelContext.Provider>,
+    );
+
+    const deleteButtons = screen.getAllByRole('button', { name: 'common.delete' });
+    expect(deleteButtons).toHaveLength(1);
+    expect(deleteButtons[0]).toBeInTheDocument();
+  });
+
+  it('downloads a model when clicking download button', async () => {
+    await render(
+      <ModelContext.Provider value={context}>
+        <ManageModels />
+      </ModelContext.Provider>,
+    );
+
+    const downloadButton = screen.getByRole('button', { name: 'common.download' });
+    await userEvent.click(downloadButton);
+
+    expect(context.downloadModel).toHaveBeenCalledTimes(1);
+    expect(context.downloadModel).toHaveBeenCalledWith(context.models[1]);
+  });
+
+  it('deletes a model when clicking delete button', async () => {
+    await render(
+      <ModelContext.Provider value={context}>
+        <ManageModels />
+      </ModelContext.Provider>,
+    );
+
+    const deleteButton = screen.getByRole('button', { name: 'common.delete' });
+    await userEvent.click(deleteButton);
+
+    expect(context.deleteModel).toHaveBeenCalledTimes(1);
+    expect(context.deleteModel).toHaveBeenCalledWith(context.models[0]);
   });
 });
