@@ -84,6 +84,7 @@ describe('useModel', () => {
       isDownloading: false,
       downloadPercentage: 100,
     });
+    expect(result.current.activeModel).toEqual(MODELS[0]);
   });
 
   it('deletes a model successfully', async () => {

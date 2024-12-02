@@ -53,6 +53,7 @@ export const MODELS: Model[] = [
 
 export function useModel() {
   const { t } = useTranslation();
+  const [activeModel, setActiveModel] = useState<Model | null>(null);
   const [modelStates, setModelStates] = useState<Record<string, ModelState>>({});
 
   useEffect(() => {
@@ -107,6 +108,8 @@ export function useModel() {
         message: t('hooks.use-model.errors.download-success-message', { name: model.name }),
         color: 'green',
       });
+
+      setActiveModel(model);
     } catch {
       updateModelState(model.name, DEFAULT_STATE);
       notifications.show({
@@ -125,6 +128,8 @@ export function useModel() {
   };
 
   return {
+    activeModel,
+    setActiveModel,
     downloadModel,
     deleteModel,
     models: MODELS.map((model) => ({
