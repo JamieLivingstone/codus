@@ -30,26 +30,26 @@ const DEFAULT_STATE: ModelState = {
 
 export const MODELS: Model[] = [
   {
-    name: 'Qwen2.5-1.5B-Instruct-GGUF',
+    name: 'Qwen2.5-Coder-7B',
     author: 'Alibaba',
-    size: '1.5 GB',
+    size: '3.81 GB',
     source: {
       type: 'HuggingFace',
-      repo: 'Qwen/Qwen2.5-1.5B-Instruct-GGUF',
-      tensor_path: 'qwen2.5-1.5b-instruct-q6_k.gguf',
-    },
-  },
-  {
-    name: 'Qwen2.5-0.5B-Instruct-GGUF',
-    author: 'Alibaba',
-    size: '0.5 GB',
-    source: {
-      type: 'HuggingFace',
-      repo: 'Qwen/Qwen2.5-0.5B-Instruct-GGUF',
-      tensor_path: 'qwen2.5-0.5b-instruct-q6_k.gguf',
+      repo: 'Qwen/Qwen2.5-Coder-7B-Instruct-GGUF',
+      tensor_path: 'qwen2.5-coder-7b-instruct-q3_k_m.gguf',
     },
   },
 ];
+
+// (async function test() {
+//   try {
+//     console.log('MODELS:', MODELS);
+//     const result = await invoke('send_message', { model: MODELS[0], message: 'Hello, how are you?' });
+//     console.log('RES:', result);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// })();
 
 export function useModel() {
   const { t } = useTranslation();

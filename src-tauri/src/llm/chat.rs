@@ -1,0 +1,49 @@
+use crate::llm::Model;
+use llama_cpp::standard_sampler::StandardSampler;
+use llama_cpp::{LlamaModel, LlamaParams, SessionParams};
+use serde::Deserialize;
+use std::path::PathBuf;
+use tauri::AppHandle;
+
+const MAX_TOKENS: usize = 2048;
+
+#[derive(Debug, Deserialize)]
+pub struct Message {
+    model: Model,
+    message: String,
+}
+
+#[tauri::command]
+pub async fn send_message(app: AppHandle, message: Message) -> Result<String, String> {
+    let model_path = message.model.get_model_path(&app);
+
+    // Validate model path exists
+    if !PathBuf::from(&model_path).exists() {
+        return Err("Model file not found".to_string());
+    }
+
+    let model = LlamaModel::load_from_file(&model_path, LlamaParams::default())
+        .map_err(|e| format!("Failed to load model: {}", e))?;
+
+    let mut ctx = model
+        .create_session(SessionParams::default())
+        .map_err(|e| format!("Failed to create session: {}", e))?;
+
+    ctx.advance_context(&message.message)
+        .map_err(|e| format!("Failed to process message: {}", e))?;
+
+    let mut output = String::with_capacity(4096);
+
+    let sampler = StandardSampler::default();
+
+    let completions = ctx
+        .start_completing_with(sampler, MAX_TOKENS)
+        .map_err(|e| format!("Failed to generate completion: {}", e))?
+        .into_strings();
+
+    for completion in completions {
+        output.push_str(&completion);
+    }
+
+    Ok(output)
+}

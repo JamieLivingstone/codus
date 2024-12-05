@@ -14,8 +14,7 @@ use tauri::{AppHandle, Manager};
 /// A `Result` containing `()` if successful, or a `String` error message if an error occurs.
 #[tauri::command]
 pub async fn delete_model(app: AppHandle, model: Model) -> Result<(), String> {
-    let models_dir = app.path().app_data_dir().unwrap().join("models");
-    let model_path = models_dir.join(&model.name);
+    let model_path = model.get_model_path(&app);
 
     if model_path.exists() {
         fs::remove_file(&model_path).map_err(|e| format!("Failed to delete model file: {e}"))?;
