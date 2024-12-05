@@ -3,9 +3,6 @@
     "clear": "Clear",
     "delete": "Delete",
     "download": "Download",
-    "errors": {
-      "offline-message": "You are offline. Please check your internet connection and try again."
-    },
     "paste": "Paste"
   },
   "components": {
@@ -33,10 +30,6 @@
     }
   },
   "tools": {
-    "all": {
-      "name": "All Tools",
-      "title": "All Tools"
-    },
     "jwt-decoder": {
       "name": "JWT Decoder",
       "description": "Decode a JSON Web Token (JWT)",
@@ -46,8 +39,7 @@
     },
     "manage-models": {
       "name": "Manage Models",
-      "description": "Manage your downloaded models",
-      "title": "Manage Models"
+      "description": "Manage your downloaded models"
     }
   }
 }

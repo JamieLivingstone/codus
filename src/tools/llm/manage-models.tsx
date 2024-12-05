@@ -11,7 +11,7 @@ export default function ManageModels() {
   return (
     <Container size="xl">
       <Stack>
-        <Title order={2}>{t('tools.manage-models.title')}</Title>
+        <Title order={2}>{t('tools.manage-models.name')}</Title>
         <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
           {models.map((model) => (
             <Card key={model.name} withBorder padding="lg" radius="md">
