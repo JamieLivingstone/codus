@@ -6,6 +6,18 @@ use tauri::AppHandle;
 
 const MAX_TOKENS: usize = 2048;
 
+/// Sends a message to the LLM model and gets a response.
+///
+/// # Arguments
+///
+/// * `app` - The Tauri application handle.
+/// * `model` - The model to use for generating the response.
+/// * `message` - The input message to send to the model.
+///
+/// # Returns
+///
+/// A `Result` containing the model's response as a `String` if successful,
+/// or a `String` error message if an error occurs.
 #[tauri::command]
 pub async fn send_message(app: AppHandle, model: Model, message: String) -> Result<String, String> {
     let model_path = model.get_model_path(&app);
