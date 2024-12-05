@@ -1,6 +1,8 @@
 {
   "common": {
     "clear": "Clear",
+    "delete": "Delete",
+    "download": "Download",
     "paste": "Paste"
   },
   "components": {
@@ -12,19 +14,32 @@
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"
+    },
+    "llm": {
+      "name": "LLM"
+    }
+  },
+  "hooks": {
+    "use-model": {
+      "errors": {
+        "download-success-title": "Model Downloaded",
+        "download-success-message": "{{name}} has been downloaded successfully.",
+        "download-failed-title": "Error Downloading Model",
+        "download-failed-message": "There was an error downloading the model. Please try again later. If this issue persists, consider opening an issue on our GitHub repository."
+      }
     }
   },
   "tools": {
-    "all": {
-      "name": "All Tools",
-      "title": "All Tools"
-    },
     "jwt-decoder": {
       "name": "JWT Decoder",
       "description": "Decode a JSON Web Token (JWT)",
       "input-placeholder": "Enter JWT token",
       "header": "Header",
       "claims": "Claims"
+    },
+    "manage-models": {
+      "name": "Manage Models",
+      "description": "Manage your downloaded models"
     }
   }
 }

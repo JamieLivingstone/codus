@@ -16,8 +16,8 @@ pub struct DecodedJwt {
 
 #[tauri::command]
 pub fn decode_jwt(token: &str) -> Result<DecodedJwt, String> {
-    let parsed_token =
-        Token::<Header, Claims, Unverified>::parse_unverified(token).map_err(|e| e.to_string())?;
+    let parsed_token = Token::<Header, Claims, Unverified>::parse_unverified(token)
+        .map_err(|e| format!("Failed to decode JWT token. Please check that the token is valid and properly formatted. Error: {}", e.to_string()))?;
 
     let header = DecodedJwtHeader {
         alg: parsed_token.header().algorithm.into(),
@@ -80,7 +80,7 @@ mod tests {
     fn test_given_an_invalid_token_returns_error() {
         let result = decode_jwt("invalid.token");
         assert!(result.is_err());
-        assert_eq!(result.err().unwrap(), "Invalid token");
+        assert_eq!(result.err().unwrap(), "Failed to decode JWT token. Please check that the token is valid and properly formatted. Error: No signature component found in token string");
     }
 
     #[test]

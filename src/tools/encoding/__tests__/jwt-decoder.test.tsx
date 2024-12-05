@@ -29,13 +29,13 @@ describe('JwtDecoder', () => {
     vi.clearAllMocks();
   });
 
-  it('should not display decoded sections when first loaded', async () => {
+  it('does not display decoded sections when first loaded', async () => {
     await render(<JwtDecoder />);
     expect(screen.queryByText('tools.jwt-decoder.header')).not.toBeInTheDocument();
     expect(screen.queryByText('tools.jwt-decoder.claims')).not.toBeInTheDocument();
   });
 
-  it('should decode and display JWT when valid token is entered', async () => {
+  it('decodes and displays JWT when valid token is entered', async () => {
     await render(<JwtDecoder />);
     const input = screen.getByPlaceholderText('tools.jwt-decoder.input-placeholder');
     await userEvent.type(input, 'mock.jwt.token');
@@ -48,7 +48,7 @@ describe('JwtDecoder', () => {
     expect(screen.getByText(/"name": "John Doe"/)).toBeInTheDocument();
   });
 
-  it('should clear input and decoded sections when clear button clicked', async () => {
+  it('clears input and decoded sections when clear button clicked', async () => {
     await render(<JwtDecoder />);
     const input = screen.getByPlaceholderText('tools.jwt-decoder.input-placeholder');
     await userEvent.type(input, 'mock.jwt.token');

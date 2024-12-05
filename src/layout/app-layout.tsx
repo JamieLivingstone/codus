@@ -96,7 +96,7 @@ export function AppLayout({ version }: AppLayoutProps) {
                       className={classes.toolLink}
                       activeProps={{ className: classes.toolLinkActive }}
                     >
-                      <tool.icon size="1rem" stroke={1.5} />
+                      <tool.icon size="1.2rem" stroke={1.5} />
                       <span>{t(tool.nameKey)}</span>
                     </Link>
                   ))}
