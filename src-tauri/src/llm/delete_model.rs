@@ -1,6 +1,6 @@
 use crate::llm::Model;
 use std::fs;
-use tauri::{AppHandle, Manager};
+use tauri::AppHandle;
 
 /// Deletes a model file and removes it from the saved models store.
 ///

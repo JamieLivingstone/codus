@@ -41,16 +41,6 @@ export const MODELS: Model[] = [
   },
 ];
 
-// (async function test() {
-//   try {
-//     console.log('MODELS:', MODELS);
-//     const result = await invoke('send_message', { model: MODELS[0], message: 'Hello, how are you?' });
-//     console.log('RES:', result);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// })();
-
 export function useModel() {
   const { t } = useTranslation();
   const [activeModel, setActiveModel] = useState<Model | null>(null);

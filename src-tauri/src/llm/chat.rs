@@ -1,21 +1,14 @@
 use crate::llm::Model;
 use llama_cpp::standard_sampler::StandardSampler;
 use llama_cpp::{LlamaModel, LlamaParams, SessionParams};
-use serde::Deserialize;
 use std::path::PathBuf;
 use tauri::AppHandle;
 
 const MAX_TOKENS: usize = 2048;
 
-#[derive(Debug, Deserialize)]
-pub struct Message {
-    model: Model,
-    message: String,
-}
-
 #[tauri::command]
-pub async fn send_message(app: AppHandle, message: Message) -> Result<String, String> {
-    let model_path = message.model.get_model_path(&app);
+pub async fn send_message(app: AppHandle, model: Model, message: String) -> Result<String, String> {
+    let model_path = model.get_model_path(&app);
 
     // Validate model path exists
     if !PathBuf::from(&model_path).exists() {
@@ -29,7 +22,7 @@ pub async fn send_message(app: AppHandle, message: Message) -> Result<String, St
         .create_session(SessionParams::default())
         .map_err(|e| format!("Failed to create session: {}", e))?;
 
-    ctx.advance_context(&message.message)
+    ctx.advance_context(&message)
         .map_err(|e| format!("Failed to process message: {}", e))?;
 
     let mut output = String::with_capacity(4096);
