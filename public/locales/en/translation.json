@@ -30,6 +30,10 @@
     }
   },
   "tools": {
+    "chat": {
+      "name": "Chat",
+      "description": "Chat with large language models"
+    },
     "jwt-decoder": {
       "name": "JWT Decoder",
       "description": "Decode a JSON Web Token (JWT)",

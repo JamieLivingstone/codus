@@ -30,20 +30,30 @@ const DEFAULT_STATE: ModelState = {
 
 export const MODELS: Model[] = [
   {
-    name: 'Qwen2.5-Coder-7B',
+    name: 'Qwen2.5-Coder-7B-Instruct',
     author: 'Alibaba',
-    size: '3.81 GB',
+    size: '4.68 GB',
     source: {
       type: 'HuggingFace',
-      repo: 'Qwen/Qwen2.5-Coder-7B-Instruct-GGUF',
-      tensor_path: 'qwen2.5-coder-7b-instruct-q3_k_m.gguf',
+      repo: 'lmstudio-community/Qwen2.5-Coder-7B-Instruct-GGUF',
+      tensor_path: 'Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf',
+    },
+  },
+  {
+    name: 'Meta-Llama-3.1-8B-Instruct',
+    author: 'Meta',
+    size: '4.92 GB',
+    source: {
+      type: 'HuggingFace',
+      repo: 'lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF',
+      tensor_path: 'Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf',
     },
   },
 ];
 
 export function useModel() {
   const { t } = useTranslation();
-  const [activeModel, setActiveModel] = useState<Model | null>(null);
+  const [activeModel, setActiveModel] = useState<Model | null>(MODELS[0]);
   const [modelStates, setModelStates] = useState<Record<string, ModelState>>({});
 
   useEffect(() => {
@@ -117,6 +127,11 @@ export function useModel() {
     updateModelState(model.name, DEFAULT_STATE);
   };
 
+  const sendMessage = async (messages: string[]) => {
+    const response = await invoke<string>('send_message', { model: activeModel, messages });
+    return response;
+  };
+
   return {
     activeModel,
     setActiveModel,
@@ -126,6 +141,7 @@ export function useModel() {
       ...model,
       state: modelStates[model.name] ?? DEFAULT_STATE,
     })),
+    sendMessage,
   };
 }
 
