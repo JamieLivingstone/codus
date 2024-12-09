@@ -4,8 +4,6 @@ use llama_cpp::{LlamaModel, LlamaParams, SessionParams};
 use std::path::PathBuf;
 use tauri::AppHandle;
 
-const MAX_TOKENS: usize = 2048;
-
 /// Sends a message to the LLM model and gets a response.
 ///
 /// # Arguments
@@ -19,7 +17,11 @@ const MAX_TOKENS: usize = 2048;
 /// A `Result` containing the model's response as a `String` if successful,
 /// or a `String` error message if an error occurs.
 #[tauri::command]
-pub async fn send_message(app: AppHandle, model: Model, message: String) -> Result<String, String> {
+pub async fn send_message(
+    app: AppHandle,
+    model: Model,
+    messages: Vec<String>,
+) -> Result<String, String> {
     let model_path = model.get_model_path(&app);
 
     // Validate model path exists
@@ -34,19 +36,19 @@ pub async fn send_message(app: AppHandle, model: Model, message: String) -> Resu
         .create_session(SessionParams::default())
         .map_err(|e| format!("Failed to create session: {}", e))?;
 
-    ctx.advance_context(&message)
-        .map_err(|e| format!("Failed to process message: {}", e))?;
+    ctx.advance_context(messages.last().unwrap()).unwrap();
 
-    let mut output = String::with_capacity(4096);
+    let mut output = String::new();
 
     let sampler = StandardSampler::default();
 
     let completions = ctx
-        .start_completing_with(sampler, MAX_TOKENS)
+        .start_completing_with(sampler, 6000)
         .map_err(|e| format!("Failed to generate completion: {}", e))?
         .into_strings();
 
     for completion in completions {
+        println!("{}", &completion);
         output.push_str(&completion);
     }
 

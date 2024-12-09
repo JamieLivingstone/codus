@@ -21,6 +21,13 @@ Codus is an offline, privacy-focused desktop application designed to boost devel
 
 </details>
 
+<details>
+<summary><strong>LLM (Large Language Models)</strong></summary>
+
+- **Chat**: Chat with downloaded LLM models.
+- **Manage Models**: Download, delete and manage LLM models.
+
+</details>
 
 
 ## Getting Started
