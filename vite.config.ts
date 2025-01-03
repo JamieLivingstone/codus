@@ -1,7 +1,7 @@
 import react from '@vitejs/plugin-react';
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 
-// @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
@@ -28,5 +28,10 @@ export default defineConfig(async () => ({
       // 3. tell vite to ignore watching `src-tauri`
       ignored: ['**/src-tauri/**'],
     },
+  },
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+    setupFiles: './vitest-setup.ts',
   },
 }));
