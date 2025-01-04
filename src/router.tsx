@@ -2,6 +2,7 @@ import { createRootRoute, createRoute, createRouter } from '@tanstack/react-rout
 
 import { useAppVersion } from './hooks/use-app-version';
 import { AppLayout } from './layout/app-layout';
+import { AllTools } from './pages/all-tools';
 import { tools } from './tools';
 
 const rootRoute = createRootRoute({
@@ -9,6 +10,12 @@ const rootRoute = createRootRoute({
     const version = useAppVersion();
     return <AppLayout version={version} />;
   },
+});
+
+const indexRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/',
+  component: AllTools,
 });
 
 const toolRoutes = tools.map((tool) =>
@@ -19,6 +26,6 @@ const toolRoutes = tools.map((tool) =>
   }),
 );
 
-const routeTree = rootRoute.addChildren([...toolRoutes]);
+const routeTree = rootRoute.addChildren([indexRoute, ...toolRoutes]);
 
 export const router = createRouter({ routeTree });
