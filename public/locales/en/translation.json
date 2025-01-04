@@ -1,4 +1,8 @@
 {
+  "common": {
+    "clear": "Clear",
+    "paste": "Paste"
+  },
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"
@@ -6,7 +10,11 @@
   },
   "tools": {
     "jwt-decoder": {
-      "name": "JWT Decoder"
+      "name": "JWT Decoder",
+      "description": "Decode a JSON Web Token (JWT)",
+      "input-placeholder": "Enter JWT token",
+      "header": "Header",
+      "claims": "Claims"
     }
   }
 }
