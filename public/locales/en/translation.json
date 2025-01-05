@@ -3,6 +3,12 @@
     "clear": "Clear",
     "paste": "Paste"
   },
+  "components": {
+    "spotlight-search": {
+      "placeholder": "Search...",
+      "no-results": "No results found"
+    }
+  },
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"

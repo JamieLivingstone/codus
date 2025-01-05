@@ -15,6 +15,7 @@
   "dependencies": {
     "@mantine/core": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
+    "@mantine/spotlight": "^7.15.2",
     "@tabler/icons-react": "^3.26.0",
     "@tanstack/react-router": "^1.93.0",
     "@tauri-apps/api": "^2",
