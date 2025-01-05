@@ -13,8 +13,12 @@
     "windows": [
       {
         "title": "codus",
-        "width": 800,
-        "height": 600
+        "minWidth": 800,
+        "minHeight": 600,
+        "height": 1200,
+        "width": 1920,
+        "resizable": true,
+        "maximized": false
       }
     ],
     "security": {
