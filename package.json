@@ -5,16 +5,18 @@
   "type": "module",
   "scripts": {
     "biome:check": "biome check --write",
-    "dev": "vite",
     "build": "tsc && vite build",
+    "dev": "vite",
+    "lint": "biome check --write && tsc --noEmit",
+    "prepare": "lefthook install",
     "preview": "vite preview",
     "tauri": "tauri",
-    "prepare": "lefthook install",
     "test": "vitest"
   },
   "dependencies": {
     "@mantine/core": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
+    "@mantine/notifications": "^7.15.2",
     "@mantine/spotlight": "^7.15.2",
     "@tabler/icons-react": "^3.26.0",
     "@tanstack/react-router": "^1.93.0",

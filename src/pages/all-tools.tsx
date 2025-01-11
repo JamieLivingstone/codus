@@ -1,4 +1,4 @@
-import { Card, Container, Group, SimpleGrid, Text, rem } from '@mantine/core';
+import { Card, Group, SimpleGrid, Text, rem } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 

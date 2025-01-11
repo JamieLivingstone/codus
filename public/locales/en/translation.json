@@ -1,9 +1,22 @@
 {
   "common": {
     "clear": "Clear",
+    "delete": "Delete",
+    "download": "Download",
     "paste": "Paste"
   },
+  "hooks": {
+    "use-model": {
+      "failed-ollama-action-title": "Failed to perform action",
+      "failed-ollama-action-message": "Please ensure Ollama is running"
+    }
+  },
   "components": {
+    "model-switcher": {
+      "select-model": "Select active model",
+      "select-model-placeholder": "Select active model",
+      "select-model-variant-no-results": "No models - download one in Manage Models"
+    },
     "spotlight-search": {
       "placeholder": "Search...",
       "no-results": "No results found"
@@ -12,6 +25,9 @@
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"
+    },
+    "llm": {
+      "name": "LLM"
     }
   },
   "tools": {
@@ -21,6 +37,15 @@
       "input-placeholder": "Enter JWT token",
       "header": "Header",
       "claims": "Claims"
+    },
+    "manage-models": {
+      "name": "Manage Models",
+      "description": "Manage your downloaded models",
+      "select-variant": "Select variant"
+    },
+    "ollama-not-running": {
+      "title": "Ollama is not running",
+      "message": "Please ensure Ollama is running on port 11434. It can take up to 30 seconds after opening for this screen to disappear."
     }
   }
 }

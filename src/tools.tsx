@@ -1,5 +1,7 @@
-import { IconBraces, IconKey, type IconProps } from '@tabler/icons-react';
+import { IconBraces, IconBrain, IconDownload, IconKey, type IconProps } from '@tabler/icons-react';
 import { lazy } from 'react';
+
+import { OllamaServiceGuard } from './tools/llm/ollama-service-guard';
 
 export type Tool = {
   id: string;
@@ -32,6 +34,33 @@ export const toolCategories: ToolCategory[] = [
         path: '/encoding/jwt-decoder',
         component: lazy(() => import('./tools/encoding/jwt-decoder')),
         tags: ['jwt', 'json web token', 'decode'],
+      },
+    ],
+  },
+  {
+    id: 'llm',
+    nameKey: 'categories.llm.name',
+    icon: IconBrain,
+    tools: [
+      {
+        id: 'manage-models',
+        nameKey: 'tools.manage-models.name',
+        descriptionKey: 'tools.manage-models.description',
+        icon: IconDownload,
+        path: '/llm/manage-models',
+        component: lazy(() =>
+          import('./tools/llm/manage-models').then((module) => ({
+            default: () => {
+              const Component = module.default;
+              return (
+                <OllamaServiceGuard>
+                  <Component />
+                </OllamaServiceGuard>
+              );
+            },
+          })),
+        ),
+        tags: ['llm', 'model', 'download'],
       },
     ],
   },

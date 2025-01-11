@@ -5,6 +5,9 @@ import i18n from 'i18next';
 import type { ReactElement, ReactNode } from 'react';
 import { initReactI18next } from 'react-i18next';
 
+import { ModelContext, type ModelContextType } from '../hooks/use-model';
+import { mockModels } from './mocks';
+
 i18n.use(initReactI18next).init({
   lng: 'en',
   fallbackLng: 'en',
@@ -15,7 +18,13 @@ i18n.use(initReactI18next).init({
   },
 });
 
-async function customRender(ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) {
+async function customRender(
+  ui: ReactElement,
+  overrides?: {
+    options?: Omit<RenderOptions, 'wrapper'>;
+    modelContext?: Partial<ModelContextType>;
+  },
+) {
   const TestProviders = ({ children }: { children: ReactNode }) => {
     const rootRoute = createRootRoute({
       component: () => <Outlet />,
@@ -33,14 +42,27 @@ async function customRender(ui: ReactElement, options?: Omit<RenderOptions, 'wra
 
     return (
       <MantineProvider>
-        <RouterProvider router={router} />
+        <ModelContext.Provider
+          value={{
+            activeModel: null,
+            deleteModel: vi.fn(),
+            downloadModel: vi.fn(),
+            downloadStates: {},
+            isOllamaRunning: true,
+            models: Object.fromEntries(mockModels.map((model) => [model.id, model])),
+            setActiveModel: vi.fn(),
+            ...overrides?.modelContext,
+          }}
+        >
+          <RouterProvider router={router} />
+        </ModelContext.Provider>
       </MantineProvider>
     );
   };
 
   let result: RenderResult | undefined;
   await act(async () => {
-    result = render(ui, { wrapper: TestProviders, ...options });
+    result = render(ui, { wrapper: TestProviders, ...overrides?.options });
   });
 
   return result as RenderResult;

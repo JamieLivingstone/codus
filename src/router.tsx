@@ -1,6 +1,7 @@
 import { createRootRoute, createRoute, createRouter } from '@tanstack/react-router';
 
 import { useAppVersion } from './hooks/use-app-version';
+import { ModelContext, useModel } from './hooks/use-model';
 import { AppLayout } from './layout/app-layout';
 import { AllTools } from './pages/all-tools';
 import { tools } from './tools';
@@ -8,7 +9,12 @@ import { tools } from './tools';
 const rootRoute = createRootRoute({
   component: () => {
     const version = useAppVersion();
-    return <AppLayout version={version} />;
+
+    return (
+      <ModelContext.Provider value={useModel()}>
+        <AppLayout version={version} />
+      </ModelContext.Provider>
+    );
   },
 });
 

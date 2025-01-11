@@ -14,6 +14,7 @@ import { Link, Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ModelSwitcher } from '../components/model-switcher';
 import { SpotlightSearch } from '../components/spotlight-search';
 import { toolCategories } from '../tools';
 import classes from './app-layout.module.css';
@@ -48,6 +49,11 @@ export function AppLayout({ version }: AppLayoutProps) {
             </Link>
             <Code fw={700}>v{version}</Code>
           </Group>
+
+          <Group>
+            <ModelSwitcher />
+          </Group>
+
           <Group>
             <ActionIcon variant="default" component={Link} to="/" size="lg" aria-label="Home">
               <IconHome size="1.2rem" />

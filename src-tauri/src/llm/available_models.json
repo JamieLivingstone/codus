@@ -1,0 +1,215 @@
+{
+  "models": [
+    {
+      "id": "gemma2",
+      "name": "Gemma 2",
+      "description": "Google Gemma 2 is a high-performing and efficient model available in three sizes: 2B, 9B, and 27B.",
+      "author": {
+        "name": "Google",
+        "url": "https://ollama.com/library/gemma2"
+      },
+      "variants": [
+        {
+          "parameter_size": "2b",
+          "disk_space": "1.6 GB"
+        },
+        {
+          "parameter_size": "9b",
+          "disk_space": "5.4 GB"
+        },
+        {
+          "parameter_size": "27b",
+          "disk_space": "16 GB"
+        }
+      ]
+    },
+    {
+      "id": "llama3.1",
+      "name": "Llama 3.1",
+      "description": "Llama 3.1 is a new state-of-the-art model from Meta available in 8B, 70B and 405B parameter sizes.",
+      "author": {
+        "name": "Meta",
+        "url": "https://ollama.com/library/llama3.1"
+      },
+      "variants": [
+        {
+          "parameter_size": "8b",
+          "disk_space": "4.9 GB"
+        },
+        {
+          "parameter_size": "70b",
+          "disk_space": "70.6 GB"
+        },
+        {
+          "parameter_size": "405b",
+          "disk_space": "405.6 GB"
+        }
+      ]
+    },
+    {
+      "id": "llama3.2",
+      "name": "Llama 3.2",
+      "description": "Meta's Llama 3.2 goes small with 1B and 3B models.",
+      "author": {
+        "name": "Meta",
+        "url": "https://ollama.com/library/llama3.2"
+      },
+      "variants": [
+        {
+          "parameter_size": "1b",
+          "disk_space": "1.3 GB"
+        },
+        {
+          "parameter_size": "3b",
+          "disk_space": "2.0 GB"
+        }
+      ]
+    },
+    {
+      "id": "llama3.3",
+      "name": "Llama 3.3",
+      "description": "New state of the art 70B model. Llama 3.3 70B offers similar performance compared to the Llama 3.1 405B model.",
+      "author": {
+        "name": "Meta",
+        "url": "https://ollama.com/library/llama3.3"
+      },
+      "variants": [
+        {
+          "parameter_size": "70b",
+          "disk_space": "43 GB"
+        }
+      ]
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral",
+      "description": "Mistral AI is a research lab building world-class open source AI models.",
+      "author": {
+        "name": "Mistral",
+        "url": "https://ollama.com/library/mistral"
+      },
+      "variants": [
+        {
+          "parameter_size": "7b",
+          "disk_space": "4.1 GB"
+        }
+      ]
+    },
+    {
+      "id": "phi3",
+      "name": "Phi 3",
+      "description": "Phi-3 is a family of lightweight 3B (Mini) and 14B (Medium) state-of-the-art open models by Microsoft.",
+      "author": {
+        "name": "Microsoft",
+        "url": "https://ollama.com/library/phi3"
+      },
+      "variants": [
+        {
+          "parameter_size": "3.8b",
+          "disk_space": "2.2 GB"
+        },
+        {
+          "parameter_size": "14b",
+          "disk_space": "7.9 GB"
+        }
+      ]
+    },
+    {
+      "id": "starcoder2",
+      "name": "StarCoder 2",
+      "description": "StarCoder2 is the next generation of transparently trained open code LLMs that comes in three sizes: 3B, 7B and 15B parameters.",
+      "author": {
+        "name": "DeepSeek",
+        "url": "https://ollama.com/library/starcoder2"
+      },
+      "variants": [
+        {
+          "parameter_size": "3b",
+          "disk_space": "1.7 GB"
+        },
+        {
+          "parameter_size": "7b",
+          "disk_space": "4.2 GB"
+        },
+        {
+          "parameter_size": "15b",
+          "disk_space": "9.1 GB"
+        }
+      ]
+    },
+    {
+      "id": "qwen2.5",
+      "name": "Qwen 2.5",
+      "description": "Qwen2.5 models are pre-trained on Alibaba's latest large-scale dataset, encompassing up to 18 trillion tokens. The model supports up to 128K tokens and has multilingual support.",
+      "author": {
+        "name": "Alibaba",
+        "url": "https://ollama.com/library/qwen2.5"
+      },
+      "variants": [
+        {
+          "parameter_size": "0.5b",
+          "disk_space": "0.4 GB"
+        },
+        {
+          "parameter_size": "1.5b",
+          "disk_space": "1 GB"
+        },
+        {
+          "parameter_size": "3b",
+          "disk_space": "2 GB"
+        },
+        {
+          "parameter_size": "7b",
+          "disk_space": "4.7 GB"
+        },
+        {
+          "parameter_size": "14b",
+          "disk_space": "9 GB"
+        },
+        {
+          "parameter_size": "32b",
+          "disk_space": "20 GB"
+        },
+        {
+          "parameter_size": "72b",
+          "disk_space": "47 GB"
+        }
+      ]
+    },
+    {
+      "id": "qwen2.5-coder",
+      "name": "Qwen 2.5 Coder",
+      "description": "The latest series of Code-Specific Qwen models, with significant improvements in code generation, code reasoning, and code fixing.",
+      "author": {
+        "name": "Alibaba",
+        "url": "https://ollama.com/library/qwen2.5-coder"
+      },
+      "variants": [
+        {
+          "parameter_size": "0.5b",
+          "disk_space": "0.6 GB"
+        },
+        {
+          "parameter_size": "1.5b",
+          "disk_space": "1 GB"
+        },
+        {
+          "parameter_size": "3b",
+          "disk_space": "1.9 GB"
+        },
+        {
+          "parameter_size": "7b",
+          "disk_space": "4.7 GB"
+        },
+        {
+          "parameter_size": "14b",
+          "disk_space": "9 GB"
+        },
+        {
+          "parameter_size": "32b",
+          "disk_space": "20 GB"
+        }
+      ]
+    }
+  ]
+}

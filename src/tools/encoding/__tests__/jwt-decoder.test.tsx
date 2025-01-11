@@ -1,8 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { render } from '../../../test/test-utils';
+import { render, screen } from '../../../test/test-utils';
 import JwtDecoder from '../jwt-decoder';
 
 const mockDecodedJwt = {
