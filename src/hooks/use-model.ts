@@ -124,10 +124,15 @@ export function useModel() {
     const key = `${modelId}:${parameterSize}` as ModelVariantKey;
     try {
       await invoke('delete_model', { modelId, parameterSize });
+
       setDownloadStates((prev) => {
         const { [key]: _, ...rest } = prev;
         return rest;
       });
+
+      if (activeModel === key) {
+        setActiveModel(null);
+      }
     } catch {
       showOllamaActionError();
     }
