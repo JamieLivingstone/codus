@@ -110,7 +110,7 @@ export function useModel() {
       ({ payload: [modelId, parameterSize, progress] }) => {
         setDownloadStates((prev) => ({
           ...prev,
-          [`${modelId}:${parameterSize}`]: { downloaded: progress === 100, progress },
+          [`${modelId}:${parameterSize}`]: { modelId, parameterSize, downloaded: progress === 100, progress },
         }));
       },
     );
@@ -137,7 +137,7 @@ export function useModel() {
     const key = `${modelId}:${parameterSize}` as ModelVariantKey;
 
     try {
-      setDownloadStates((prev) => ({ ...prev, [key]: { downloaded: false, progress: 0 } }));
+      setDownloadStates((prev) => ({ ...prev, [key]: { modelId, parameterSize, downloaded: false, progress: 0 } }));
       await invoke('download_model', { modelId, parameterSize });
     } catch {
       showOllamaActionError();

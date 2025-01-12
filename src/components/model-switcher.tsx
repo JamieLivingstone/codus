@@ -10,10 +10,13 @@ export function ModelSwitcher() {
     (options, state) => {
       const model = models[state.modelId];
 
-      options.push({
-        label: `${model.name} (${state.parameterSize.toUpperCase()})`,
-        value: `${model.id}:${state.parameterSize}`,
-      });
+      if (state.downloaded) {
+        options.push({
+          label: `${model.name} (${state.parameterSize.toUpperCase()})`,
+          value: `${model.id}:${state.parameterSize}`,
+        });
+      }
+
       return options;
     },
     [],

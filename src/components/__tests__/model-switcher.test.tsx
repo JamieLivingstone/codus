@@ -29,7 +29,7 @@ describe('ModelSwitcher', () => {
         [expectedModelId]: {
           modelId: mockModel.id,
           parameterSize: mockVariant.parameter_size,
-          downloaded: false,
+          downloaded: true,
           progress: 0,
         },
       },
