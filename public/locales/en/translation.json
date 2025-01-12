@@ -31,6 +31,16 @@
     }
   },
   "tools": {
+    "chat": {
+      "name": "Chat",
+      "description": "Chat with your LLM",
+      "no-model-selected-warning-title": "No model selected",
+      "no-model-selected-warning-message": "Please select a model from the model switcher to start chatting",
+      "welcome-message": "Hello! How can I help you today?",
+      "thinking-message": "Thinking...",
+      "error-sending-message": "Sorry, an error occurred. Please try again.",
+      "input-placeholder": "Type your message..."
+    },
     "jwt-decoder": {
       "name": "JWT Decoder",
       "description": "Decode a JSON Web Token (JWT)",

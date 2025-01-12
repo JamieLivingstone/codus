@@ -20,6 +20,11 @@ export type Model = {
   variants: ModelVariant[];
 };
 
+export type ChatMessage = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
 type ModelVariantKey = `${Model['id']}:${ModelVariant['parameter_size']}`;
 
 type ModelVariantDownloadState = {
@@ -48,7 +53,7 @@ export function useModel() {
     }
 
     ollamaHealthCheck();
-    const interval = setInterval(ollamaHealthCheck, isOllamaRunning ? 30000 : 10000);
+    const interval = setInterval(ollamaHealthCheck, isOllamaRunning ? 60000 : 10000);
     return () => clearInterval(interval);
   }, [isOllamaRunning]);
 
@@ -143,6 +148,22 @@ export function useModel() {
     }
   }
 
+  async function sendMessage(messages: ChatMessage[]) {
+    if (!activeModel) {
+      throw new Error('No active model');
+    }
+
+    const [modelId, parameterSize] = activeModel.split(':');
+
+    const response = await invoke<ChatMessage>('chat', {
+      modelId,
+      parameterSize,
+      messages,
+    });
+
+    return response;
+  }
+
   function showOllamaActionError() {
     notifications.show({
       title: t('hooks.use-model.failed-ollama-action-title'),
@@ -158,6 +179,7 @@ export function useModel() {
     downloadStates,
     isOllamaRunning,
     models,
+    sendMessage,
     setActiveModel,
   };
 }

@@ -1,4 +1,4 @@
-import { IconBraces, IconBrain, IconDownload, IconKey, type IconProps } from '@tabler/icons-react';
+import { IconBraces, IconBrain, IconDownload, IconKey, IconMessage, type IconProps } from '@tabler/icons-react';
 import { lazy } from 'react';
 
 import { OllamaServiceGuard } from './tools/llm/ollama-service-guard';
@@ -42,6 +42,15 @@ export const toolCategories: ToolCategory[] = [
     nameKey: 'categories.llm.name',
     icon: IconBrain,
     tools: [
+      {
+        id: 'chat',
+        nameKey: 'tools.chat.name',
+        descriptionKey: 'tools.chat.description',
+        icon: IconMessage,
+        path: '/llm/chat',
+        component: lazy(() => import('./tools/llm/chat')),
+        tags: ['llm', 'chat'],
+      },
       {
         id: 'manage-models',
         nameKey: 'tools.manage-models.name',

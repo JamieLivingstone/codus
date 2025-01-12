@@ -23,7 +23,8 @@ export function ModelSwitcher() {
     <Popover disabled={isOllamaRunning} position="bottom" withArrow>
       <Popover.Target>
         <Select
-          clearable
+          allowDeselect={false}
+          clearable={false}
           data={downloadedModels}
           disabled={!isOllamaRunning}
           nothingFoundMessage={t('components.model-switcher.select-model-variant-no-results')}

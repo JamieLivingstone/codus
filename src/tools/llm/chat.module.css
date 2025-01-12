@@ -1,0 +1,25 @@
+.chatScrollArea {
+  height: calc(100vh - calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) - 72px);
+}
+
+.message {
+  min-width: 20%;
+}
+
+.message[data-role="assistant"] {
+  align-self: flex-start;
+  background-color: light-dark(var(--mantine-color-blue-0), var(--mantine-color-blue-9));
+}
+
+.message[data-role="user"] {
+  align-self: flex-end;
+  background-color: light-dark(white, var(--mantine-color-gray-9));
+}
+
+.assistantIcon {
+  color: light-dark(var(--mantine-color-blue-6), var(--mantine-color-blue-4));
+}
+
+.userIcon {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-4));
+}

@@ -8,10 +8,11 @@ import { tools } from './tools';
 
 const rootRoute = createRootRoute({
   component: () => {
+    const model = useModel();
     const version = useAppVersion();
 
     return (
-      <ModelContext.Provider value={useModel()}>
+      <ModelContext.Provider value={model}>
         <AppLayout version={version} />
       </ModelContext.Provider>
     );
