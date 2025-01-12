@@ -39,8 +39,8 @@ export function AppLayout({ version }: AppLayoutProps) {
       padding="md"
     >
       <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
-          <Group>
+        <Group h="100%" px="md" justify="space-between" wrap="nowrap">
+          <Group w="33%">
             <Burger opened={mobileOpened} onClick={() => setMobileOpened((o) => !o)} hiddenFrom="sm" size="sm" />
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Text size="xl" fw="bold">
@@ -50,11 +50,11 @@ export function AppLayout({ version }: AppLayoutProps) {
             <Code fw={700}>v{version}</Code>
           </Group>
 
-          <Group>
+          <Group w="33%" justify="center">
             <ModelSwitcher />
           </Group>
 
-          <Group>
+          <Group w="33%" justify="flex-end">
             <ActionIcon variant="default" component={Link} to="/" size="lg" aria-label="Home">
               <IconHome size="1.2rem" />
             </ActionIcon>
