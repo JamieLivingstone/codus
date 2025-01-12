@@ -8,6 +8,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             encoding::decode_jwt,
+            llm::chat,
             llm::delete_model,
             llm::download_model,
             llm::list_available_models,
