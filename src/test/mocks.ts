@@ -12,10 +12,12 @@ export const mockModels: Model[] = [
     variants: [
       {
         disk_space: '1GB',
+        downloaded: false,
         parameter_size: '1b',
       },
       {
         disk_space: '8GB',
+        downloaded: true,
         parameter_size: '13b',
       },
     ],
@@ -31,6 +33,7 @@ export const mockModels: Model[] = [
     variants: [
       {
         disk_space: '64GB',
+        downloaded: false,
         parameter_size: '70b',
       },
     ],

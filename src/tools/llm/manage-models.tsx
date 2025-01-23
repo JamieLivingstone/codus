@@ -1,15 +1,56 @@
 import { Anchor, Button, Card, Progress, Select, SimpleGrid, Stack, Text, Title, Tooltip } from '@mantine/core';
 import { IconCloudDownload, IconTrash } from '@tabler/icons-react';
-import { useState } from 'react';
+import { listen } from '@tauri-apps/api/event';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { type Model, useModelContext } from '../../hooks/use-model';
+
+import { useModelContext } from '../../hooks/use-model';
 
 export default function ManageModels() {
   const { t } = useTranslation();
-  const { deleteModel, downloadModel, downloadStates, models } = useModelContext();
-  const [variantSelections, setVariantSelections] = useState<
-    Record<Model['id'], Model['variants'][number]['parameter_size']>
-  >({});
+  const { deleteModel, downloadModel, models } = useModelContext();
+  const [variantSelections, setVariantSelections] = useState<Record<string, string>>({});
+  const [downloadProgress, setDownloadProgress] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const unsubscribe = listen<[string, string, number]>(
+      'model-download-progress',
+      ({ payload: [modelId, parameterSize, progress] }) => {
+        setDownloadProgress((prev) => ({
+          ...prev,
+          [`${modelId}:${parameterSize}`]: progress,
+        }));
+      },
+    );
+
+    return () => {
+      unsubscribe.then((fn) => fn());
+    };
+  }, []);
+
+  const handleDownload = async (modelId: string, parameterSize: string) => {
+    const key = `${modelId}:${parameterSize}`;
+    try {
+      setDownloadProgress((prev) => ({ ...prev, [key]: 0 }));
+      await downloadModel(modelId, parameterSize);
+    } finally {
+      setDownloadProgress((prev) => {
+        const { [key]: _, ...rest } = prev;
+        return rest;
+      });
+    }
+  };
+
+  const handleDelete = async (modelId: string, parameterSize: string) => {
+    try {
+      await deleteModel(modelId, parameterSize);
+    } finally {
+      setDownloadProgress((prev) => {
+        const { [`${modelId}:${parameterSize}`]: _, ...rest } = prev;
+        return rest;
+      });
+    }
+  };
 
   return (
     <Stack>
@@ -17,27 +58,9 @@ export default function ManageModels() {
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
         {Object.values(models).map((model) => {
           const selectedVariant = model.variants.find((v) => v.parameter_size === variantSelections[model.id]);
-          const variantKey = `${model.id}:${selectedVariant?.parameter_size}`;
-          const downloadState = downloadStates[variantKey as keyof typeof downloadStates];
-          const isDownloaded = downloadState?.downloaded ?? false;
-          const isDownloading = !isDownloaded && downloadState?.progress !== undefined;
-          const progress = downloadState?.progress ?? 0;
-
-          const handleVariantChange = (value: string | null) => {
-            setVariantSelections((prev) => ({ ...prev, [model.id]: value || '' }));
-          };
-
-          const handleDownload = () => {
-            if (selectedVariant) {
-              downloadModel(model.id, selectedVariant.parameter_size);
-            }
-          };
-
-          const handleDelete = () => {
-            if (selectedVariant) {
-              deleteModel(model.id, selectedVariant.parameter_size);
-            }
-          };
+          const key = `${model.id}:${selectedVariant?.parameter_size}`;
+          const progress = downloadProgress[key];
+          const isDownloading = progress !== undefined;
 
           return (
             <Card withBorder padding="lg" radius="md" key={model.id}>
@@ -46,8 +69,9 @@ export default function ManageModels() {
                   <Anchor size="xl" fw={700} href={model.author.url} target="_blank" rel="noopener noreferrer">
                     {model.name} ({model.author.name})
                   </Anchor>
+
                   <Tooltip label={model.description} multiline maw={300} position="bottom">
-                    <Text size="sm" c="dimmed" lineClamp={2} style={{ flex: 1, cursor: 'help' }}>
+                    <Text size="sm" c="dimmed" lineClamp={2} style={{ flex: 1, height: '26px', cursor: 'help' }}>
                       {model.description}
                     </Text>
                   </Tooltip>
@@ -58,25 +82,29 @@ export default function ManageModels() {
                   placeholder={`${t('tools.manage-models.select-variant')}...`}
                   clearable
                   value={variantSelections[model.id]}
-                  onChange={handleVariantChange}
-                  data={model.variants.map((variant) => ({
-                    value: variant.parameter_size,
-                    label: `${variant.parameter_size.toUpperCase()} (${variant.disk_space})`,
+                  onChange={(value) => setVariantSelections((prev) => ({ ...prev, [model.id]: value || '' }))}
+                  data={model.variants.map((v) => ({
+                    value: v.parameter_size,
+                    label: `${v.parameter_size.toUpperCase()} (${v.disk_space})`,
                   }))}
                 />
 
-                {!isDownloaded && !isDownloading && (
+                {!selectedVariant?.downloaded && !isDownloading && (
                   <Button
-                    leftSection={<IconCloudDownload size={16} />}
                     disabled={!selectedVariant}
-                    onClick={handleDownload}
+                    leftSection={<IconCloudDownload size={16} />}
+                    onClick={() => handleDownload(model.id, selectedVariant?.parameter_size ?? '')}
                   >
                     {t('common.download')}
                   </Button>
                 )}
 
-                {isDownloaded && (
-                  <Button color="red" leftSection={<IconTrash size={16} />} onClick={handleDelete}>
+                {selectedVariant?.downloaded && (
+                  <Button
+                    color="red"
+                    leftSection={<IconTrash size={16} />}
+                    onClick={() => handleDelete(model.id, selectedVariant.parameter_size)}
+                  >
                     {t('common.delete')}
                   </Button>
                 )}

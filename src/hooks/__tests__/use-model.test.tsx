@@ -9,31 +9,17 @@ vi.mock('@tauri-apps/api/core', () => ({
   invoke: vi.fn(),
 }));
 
-vi.mock('@tauri-apps/api/event', () => ({
-  listen: vi.fn().mockReturnValue(Promise.resolve(vi.fn())),
-}));
-
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
-
-const mockDownloadedModel = {
-  name: `${mockModels[0].id}:${mockModels[0].variants[0].parameter_size}`,
-  modified_at: '2024-01-01',
-  size: 1000000,
-};
 
 describe('useModel', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockFetch.mockResolvedValue(new Response(null, { status: 200 }));
-
-    // Setup happy path for common commands
     (invoke as Mock).mockImplementation((command) => {
       switch (command) {
-        case 'list_available_models':
+        case 'list_models':
           return Promise.resolve(mockModels);
-        case 'list_downloaded_models':
-          return Promise.resolve([mockDownloadedModel]);
         case 'delete_model':
           return Promise.resolve();
         default:
@@ -43,48 +29,27 @@ describe('useModel', () => {
   });
 
   describe('model fetching', () => {
-    test('returns models and download states when Ollama is running', async () => {
+    test('lists models when ollama is running', async () => {
       const { result } = renderHook(() => useModel());
 
       await waitFor(() => {
         expect(result.current.models).toEqual(Object.fromEntries(mockModels.map((model) => [model.id, model])));
-        expect(result.current.downloadStates).toEqual({
-          [`${mockModels[0].id}:${mockModels[0].variants[0].parameter_size}`]: {
-            modelId: mockModels[0].id,
-            parameterSize: mockModels[0].variants[0].parameter_size,
-            progress: 100,
-            downloaded: true,
-          },
-        });
         expect(result.current.isOllamaRunning).toBe(true);
       });
 
-      expect(invoke).toHaveBeenCalledWith('list_available_models');
-      expect(invoke).toHaveBeenCalledWith('list_downloaded_models');
+      expect(invoke).toHaveBeenCalledWith('list_models');
     });
 
-    test('handles downloaded models not in available models catalog', async () => {
-      (invoke as Mock).mockImplementation((command) => {
-        if (command === 'list_downloaded_models') {
-          return Promise.resolve([
-            {
-              ...mockDownloadedModel,
-              name: 'unknown-model:7b',
-            },
-          ]);
-        }
-        return Promise.resolve(mockModels);
-      });
-
-      const consoleSpy = vi.spyOn(console, 'warn');
+    test('does not list models when ollama is down', async () => {
+      mockFetch.mockRejectedValue(new Error());
       const { result } = renderHook(() => useModel());
 
       await waitFor(() => {
-        expect(result.current.downloadStates).toEqual({});
-        expect(consoleSpy).toHaveBeenCalledWith(
-          'Model unknown-model (7b) is downloaded but not available in model catalog',
-        );
+        expect(result.current.isOllamaRunning).toBe(false);
+        expect(result.current.models).toEqual({});
       });
+
+      expect(invoke).not.toHaveBeenCalled();
     });
   });
 

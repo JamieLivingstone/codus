@@ -4,23 +4,19 @@ import { useModelContext } from '../hooks/use-model';
 
 export function ModelSwitcher() {
   const { t } = useTranslation();
-  const { activeModel, downloadStates, isOllamaRunning, models, setActiveModel } = useModelContext();
+  const { activeModel, isOllamaRunning, models, setActiveModel } = useModelContext();
 
-  const downloadedModels = Object.values(downloadStates).reduce<{ label: string; value: string }[]>(
-    (options, state) => {
-      const model = models[state.modelId];
-
-      if (state.downloaded) {
+  const downloadedModels = Object.values(models).reduce<{ label: string; value: string }[]>((options, model) => {
+    for (const variant of model.variants) {
+      if (variant.downloaded) {
         options.push({
-          label: `${model.name} (${state.parameterSize.toUpperCase()})`,
-          value: `${model.id}:${state.parameterSize}`,
+          label: `${model.name} (${variant.parameter_size.toUpperCase()})`,
+          value: `${model.id}:${variant.parameter_size}`,
         });
       }
-
-      return options;
-    },
-    [],
-  );
+    }
+    return options;
+  }, []);
 
   return (
     <Popover disabled={isOllamaRunning} position="bottom" withArrow>

@@ -47,10 +47,10 @@ async function customRender(
             activeModel: null,
             deleteModel: vi.fn(),
             downloadModel: vi.fn(),
-            downloadStates: {},
             isOllamaRunning: true,
             models: Object.fromEntries(mockModels.map((model) => [model.id, model])),
             setActiveModel: vi.fn(),
+            sendMessage: vi.fn(),
             ...overrides?.modelContext,
           }}
         >

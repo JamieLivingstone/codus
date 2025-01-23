@@ -11,8 +11,7 @@ pub fn run() {
             llm::chat,
             llm::delete_model,
             llm::download_model,
-            llm::list_available_models,
-            llm::list_downloaded_models,
+            llm::list_models,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

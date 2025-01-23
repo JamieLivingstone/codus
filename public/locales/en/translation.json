@@ -13,9 +13,9 @@
   },
   "components": {
     "model-switcher": {
-      "select-model": "Select active model",
+      "select-model": "Select a model",
       "select-model-placeholder": "Select active model",
-      "select-model-variant-no-results": "No models - download one in Manage Models"
+      "select-model-variant-no-results": "No models downloaded - download one in Manage Models"
     },
     "spotlight-search": {
       "placeholder": "Search...",

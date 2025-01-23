@@ -16,42 +16,25 @@ describe('ModelSwitcher', () => {
   });
 
   test('displays available models and triggers selection callback', async () => {
-    const mockModel = mockModels[0];
-    const mockVariant = mockModel.variants[0];
-    const expectedModelId = `${mockModel.id}:${mockVariant.parameter_size}`;
     const mockSetActiveModel = vi.fn();
+    const mockModel = { ...mockModels[0], variants: [{ ...mockModels[0].variants[0], downloaded: true }] };
+    const expectedModelId = `${mockModel.id}:${mockModel.variants[0].parameter_size}`;
 
-    const mockModelContext = {
-      isOllamaRunning: true,
-      setActiveModel: mockSetActiveModel,
-      models: { [mockModel.id]: mockModel },
-      downloadStates: {
-        [expectedModelId]: {
-          modelId: mockModel.id,
-          parameterSize: mockVariant.parameter_size,
-          downloaded: true,
-          progress: 0,
-        },
+    await render(<ModelSwitcher />, {
+      modelContext: {
+        isOllamaRunning: true,
+        setActiveModel: mockSetActiveModel,
+        models: { [mockModel.id]: mockModel },
       },
-    };
+    });
 
-    await render(<ModelSwitcher />, { modelContext: mockModelContext });
+    fireEvent.click(getModelSwitcher());
 
-    // Open model selection dropdown
-    const select = getModelSwitcher();
-    fireEvent.click(select);
-
-    // Find and click model variant
-    const expectedOptionText = `${mockModel.name} (${mockVariant.parameter_size.toUpperCase()})`;
-    const option = screen.getByText(expectedOptionText);
-
-    // Verify callback not called before selection
+    const option = screen.getByText(`${mockModel.name} (${mockModel.variants[0].parameter_size.toUpperCase()})`);
     expect(mockSetActiveModel).not.toHaveBeenCalled();
 
-    // Select option
     fireEvent.click(option);
 
-    // Verify option exists and callback called correctly
     expect(option).toBeInTheDocument();
     expect(mockSetActiveModel).toHaveBeenCalledWith(expectedModelId);
     expect(mockSetActiveModel).toHaveBeenCalledTimes(1);

@@ -1,8 +1,7 @@
 use crate::llm::Model;
-use serde::de::Error;
+use ollama_rs::Ollama;
 use tauri::path::BaseDirectory;
 use tauri::Manager;
-use tokio::fs::read_to_string;
 
 /// Lists all available LLM models that can be downloaded and used through Ollama.
 /// The list of models is maintained in a JSON file and includes popular open models like
@@ -12,16 +11,26 @@ use tokio::fs::read_to_string;
 /// and parses them into a list of Model structs. The JSON file contains model metadata
 /// including names, descriptions, parameter sizes and disk space requirements.
 ///
+/// The function also queries Ollama for locally downloaded models and merges this information,
+/// marking which model variants are already downloaded and available for use.
+///
 /// # Arguments
 /// * `handle` - Tauri app handle used to resolve resource paths
 ///
 /// # Returns
-/// * `Ok(Vec<Model>)` containing the list of available models
+/// * `Ok(Vec<Model>)` containing the list of available models with download status
 /// * `Err(String)` with error message if loading/parsing fails
 ///
 /// ```
 #[tauri::command]
-pub async fn list_available_models(handle: tauri::AppHandle) -> Result<Vec<Model>, String> {
+pub async fn list_models(handle: tauri::AppHandle) -> Result<Vec<Model>, String> {
+    let ollama = Ollama::default();
+
+    let local_models = ollama
+        .list_local_models()
+        .await
+        .map_err(|e| format!("Failed to list local models: {}", e))?;
+
     let available_models_path = handle
         .path()
         .resolve(
@@ -30,17 +39,17 @@ pub async fn list_available_models(handle: tauri::AppHandle) -> Result<Vec<Model
         )
         .map_err(|e| format!("Failed to resolve available models path: {}", e))?;
 
-    let available_models_json = read_to_string(available_models_path)
+    let mut models: Vec<Model> = Model::from_json(available_models_path)
         .await
-        .map_err(|e| format!("Failed to read available models file: {}", e))?;
+        .map_err(|e| format!("Failed to load available models: {}", e))?;
 
-    let models: Vec<Model> = serde_json::from_str::<serde_json::Value>(&available_models_json)
-        .and_then(|json| {
-            json.get("models")
-                .ok_or_else(|| serde_json::Error::custom("Missing 'models' key"))
-                .and_then(|models| serde_json::from_value(models.to_owned()))
-        })
-        .map_err(|e| format!("Failed to parse available models JSON: {}", e))?;
+    for model in &mut models {
+        for variant in &mut model.variants {
+            variant.downloaded = local_models.iter().any(|local_model| {
+                local_model.name == format!("{}:{}", model.id, variant.parameter_size)
+            });
+        }
+    }
 
     Ok(models)
 }

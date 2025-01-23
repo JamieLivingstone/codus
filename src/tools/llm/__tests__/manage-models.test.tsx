@@ -2,6 +2,10 @@ import { mockModels } from '../../../test/mocks';
 import { fireEvent, render, screen } from '../../../test/test-utils';
 import ManageModels from '../manage-models';
 
+vi.mock('@tauri-apps/api/event', () => ({
+  listen: vi.fn().mockReturnValue(Promise.resolve(vi.fn())),
+}));
+
 describe('ManageModels', () => {
   test('displays model cards', async () => {
     await render(<ManageModels />);
@@ -41,11 +45,10 @@ describe('ManageModels', () => {
 
     // Enable after selecting variant
     fireEvent.click(variantSelect);
-    const variant = mockModels[0].variants[0];
+    const variant = { ...mockModels[0].variants[0], downloaded: false };
     fireEvent.click(
       screen.getByRole('option', { name: `${variant.parameter_size.toUpperCase()} (${variant.disk_space})` }),
     );
-
     expect(screen.getAllByRole('button', { name: 'common.download' })[0]).toBeEnabled();
   });
 });

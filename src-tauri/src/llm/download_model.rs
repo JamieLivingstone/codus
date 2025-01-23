@@ -52,7 +52,7 @@ pub async fn download_model(
             _ => last_percentage.max(0),
         };
 
-        if downloaded_percentage != last_percentage {
+        if downloaded_percentage != last_percentage && downloaded_percentage < 100 {
             handle
                 .emit(
                     "model-download-progress",
@@ -62,10 +62,6 @@ pub async fn download_model(
             last_percentage = downloaded_percentage;
         }
     }
-
-    handle
-        .emit("model-download-progress", (&model_id, &parameter_size, 100))
-        .unwrap();
 
     Ok(())
 }
