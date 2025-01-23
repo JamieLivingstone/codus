@@ -1,5 +1,6 @@
 use ollama_rs::Ollama;
 use tauri::Emitter;
+use tokio::time::{Duration, Instant};
 use tokio_stream::StreamExt;
 
 /// Downloads a model from Ollama and emits progress events
@@ -27,23 +28,29 @@ pub async fn download_model(
     parameter_size: String,
 ) -> Result<(), String> {
     let ollama = Ollama::default();
+    let model_name = format!("{}:{}", model_id, parameter_size);
 
-    let mut res = ollama
-        .pull_model_stream(format!("{}:{}", model_id, parameter_size), true)
+    let mut stream = ollama
+        .pull_model_stream(model_name, true)
         .await
         .map_err(|e| format!("Failed to download model: {}", e))?;
 
     let mut last_percentage = 0;
+    let mut last_activity = Instant::now();
+    let timeout = Duration::from_secs(60);
 
-    while let Some(res) = res.next().await {
-        let res = res.unwrap();
+    while let Some(result) = stream.next().await {
+        if last_activity.elapsed() > timeout {
+            return Err("Download timed out after 60 seconds of inactivity".to_string());
+        }
 
-        let downloaded_percentage =
-            if let (Some(completed), Some(total)) = (res.completed, res.total) {
-                ((completed as f64 / total as f64) * 100.0) as u64
-            } else {
-                0
-            };
+        let progress = result.map_err(|e| format!("Stream error: {}", e))?;
+        last_activity = Instant::now();
+
+        let downloaded_percentage = match (progress.completed, progress.total) {
+            (Some(completed), Some(total)) => ((completed as f64 / total as f64) * 100.0) as u64,
+            _ => last_percentage.max(0),
+        };
 
         if downloaded_percentage != last_percentage {
             handle
