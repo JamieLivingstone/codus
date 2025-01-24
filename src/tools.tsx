@@ -1,5 +1,5 @@
 import { IconBraces, IconBrain, IconDownload, IconKey, IconMessage, type IconProps } from '@tabler/icons-react';
-import { lazy } from 'react';
+import { type AsyncRouteComponent, lazyRouteComponent } from '@tanstack/react-router';
 
 import { OllamaServiceGuard } from './tools/llm/ollama-service-guard';
 
@@ -9,7 +9,7 @@ export type Tool = {
   descriptionKey: string;
   icon: React.ComponentType<IconProps>;
   path: string;
-  component: React.LazyExoticComponent<React.ComponentType>;
+  component: AsyncRouteComponent<unknown>;
   tags: string[];
 };
 
@@ -32,7 +32,7 @@ export const toolCategories: ToolCategory[] = [
         descriptionKey: 'tools.jwt-decoder.description',
         icon: IconKey,
         path: '/encoding/jwt-decoder',
-        component: lazy(() => import('./tools/encoding/jwt-decoder')),
+        component: lazyRouteComponent(() => import('./tools/encoding/jwt-decoder')),
         tags: ['jwt', 'json web token', 'decode'],
       },
     ],
@@ -48,7 +48,7 @@ export const toolCategories: ToolCategory[] = [
         descriptionKey: 'tools.chat.description',
         icon: IconMessage,
         path: '/llm/chat',
-        component: lazy(() => import('./tools/llm/chat')),
+        component: lazyRouteComponent(() => import('./tools/llm/chat')),
         tags: ['llm', 'chat'],
       },
       {
@@ -57,7 +57,7 @@ export const toolCategories: ToolCategory[] = [
         descriptionKey: 'tools.manage-models.description',
         icon: IconDownload,
         path: '/llm/manage-models',
-        component: lazy(() =>
+        component: lazyRouteComponent(() =>
           import('./tools/llm/manage-models').then((module) => ({
             default: () => {
               const Component = module.default;
