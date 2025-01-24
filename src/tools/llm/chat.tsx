@@ -1,5 +1,6 @@
-import { ActionIcon, Alert, Flex, Paper, ScrollArea, Stack, Text, Textarea } from '@mantine/core';
+import { ActionIcon, Alert, Code, Flex, List, Paper, ScrollArea, Stack, Text, Textarea, Title } from '@mantine/core';
 import { IconAlertCircle, IconRobot, IconSend, IconUser } from '@tabler/icons-react';
+import Markdown from 'markdown-to-jsx';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +63,7 @@ export default function Chat() {
               {t('tools.chat.no-model-selected-warning-message')}
             </Alert>
           )}
+
           {messages.map(({ content, role }, index) => (
             <Paper
               // biome-ignore lint/suspicious/noArrayIndexKey: Using index as key is safe here since messages are append-only
@@ -70,7 +72,7 @@ export default function Chat() {
               radius="md"
               className={classes.message}
               data-role={role}
-              mb="sm"
+              mb={index === messages.length - 1 ? 0 : 'sm'}
               miw="20%"
               withBorder
             >
@@ -85,7 +87,27 @@ export default function Chat() {
                     {role === 'assistant' ? 'Assistant' : 'You'}
                   </Text>
                 </Flex>
-                <Text>{content}</Text>
+                <Markdown
+                  options={{
+                    overrides: {
+                      p: { component: Text },
+                      ul: { component: List },
+                      ol: { component: List, props: { type: 'ordered' } },
+                      li: { component: List.Item },
+                      h1: { component: Title, props: { order: 1 } },
+                      h2: { component: Title, props: { order: 2 } },
+                      h3: { component: Title, props: { order: 3 } },
+                      h4: { component: Title, props: { order: 4 } },
+                      h5: { component: Title, props: { order: 5 } },
+                      h6: { component: Title, props: { order: 6 } },
+                      code: { component: Code, props: { p: 0 } },
+                      pre: { component: Code, props: { block: true } },
+                    },
+                    wrapper: Stack,
+                  }}
+                >
+                  {content}
+                </Markdown>
               </Stack>
             </Paper>
           ))}
@@ -100,6 +122,7 @@ export default function Chat() {
         autosize
         minRows={2}
         maxRows={2}
+        mt="sm"
         disabled={!activeModel || isThinking}
         rightSection={
           <ActionIcon

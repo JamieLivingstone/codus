@@ -1,5 +1,5 @@
 .chatScrollArea {
-  height: calc(100vh - calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) - 72px);
+  height: calc(100vh - calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) - 83px);
 }
 
 .message {

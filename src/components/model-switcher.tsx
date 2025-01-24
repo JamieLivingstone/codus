@@ -32,7 +32,7 @@ export function ModelSwitcher() {
           value={activeModel}
           onChange={(value) => setActiveModel(value as `${string}:${string}`)}
           styles={{
-            input: { margin: 0, width: '300px' },
+            input: { cursor: 'pointer', margin: 0, textAlign: 'center', width: '250px' },
             wrapper: { margin: 0 },
           }}
         />
