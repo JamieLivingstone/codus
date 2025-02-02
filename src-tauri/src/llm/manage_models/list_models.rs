@@ -1,4 +1,4 @@
-use crate::llm::Model;
+use crate::llm::manage_models::Model;
 use ollama_rs::Ollama;
 use tauri::path::BaseDirectory;
 use tauri::Manager;

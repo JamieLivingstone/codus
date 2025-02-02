@@ -17,7 +17,6 @@ impl Model {
             .await
             .map_err(|e| format!("Failed to read available models file: {}", e))?;
 
-        // Directly parse the JSON structure we expect
         let json: serde_json::Value = serde_json::from_str(&models_json)
             .map_err(|e| format!("Failed to parse JSON: {}", e))?;
 

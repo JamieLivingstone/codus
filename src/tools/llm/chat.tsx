@@ -57,7 +57,7 @@ export default function Chat() {
             <Alert
               icon={<IconAlertCircle size={24} />}
               title={t('tools.chat.no-model-selected-warning-title')}
-              color="yellow"
+              color="red"
               mb="md"
             >
               {t('tools.chat.no-model-selected-warning-message')}

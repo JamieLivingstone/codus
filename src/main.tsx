@@ -28,6 +28,15 @@ const theme = createTheme({
       '#101113',
     ],
   },
+  components: {
+    Anchor: {
+      defaultProps: {
+        style: {
+          color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+        },
+      },
+    },
+  },
   defaultGradient: {
     from: 'blue',
     to: 'cyan',

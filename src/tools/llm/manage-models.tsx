@@ -55,7 +55,7 @@ export default function ManageModels() {
   return (
     <Stack>
       <Title order={2}>{t('tools.manage-models.name')}</Title>
-      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="xl">
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="md">
         {Object.values(models).map((model) => {
           const selectedVariant = model.variants.find((v) => v.parameter_size === variantSelections[model.id]);
           const key = `${model.id}:${selectedVariant?.parameter_size}`;
@@ -63,10 +63,10 @@ export default function ManageModels() {
           const isDownloading = progress !== undefined;
 
           return (
-            <Card withBorder padding="lg" radius="md" key={model.id}>
+            <Card withBorder padding="md" radius="md" key={model.id}>
               <Stack h="100%">
                 <Stack gap={2} style={{ flex: 1 }}>
-                  <Anchor size="xl" fw={700} href={model.author.url} target="_blank" rel="noopener noreferrer">
+                  <Anchor size="lg" fw={700} href={model.author.url} target="_blank" rel="noopener noreferrer">
                     {model.name} ({model.author.name})
                   </Anchor>
 

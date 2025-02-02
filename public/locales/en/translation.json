@@ -41,6 +41,24 @@
       "error-sending-message": "Sorry, an error occurred. Please try again.",
       "input-placeholder": "Type your message..."
     },
+    "chat-history": {
+      "name": "Chat History",
+      "description": "Browse and manage your past conversations",
+      "no-chats": "You haven't started any chats yet",
+      "new-chat": "Start New Chat",
+      "message-count": "{{count}} messages in this chat",
+      "created-at": "Started on {{date}}",
+      "updated-at": "Last active on {{date}}",
+      "sort": {
+        "placeholder": "Sort chats by",
+        "created-newest": "Newest chats first",
+        "created-oldest": "Oldest chats first",
+        "updated-newest": "Recently active",
+        "updated-oldest": "Least recently active",
+        "messages-most": "Most messages",
+        "messages-least": "Fewest messages"
+      }
+    },
     "jwt-decoder": {
       "name": "JWT Decoder",
       "description": "Decode a JSON Web Token (JWT)",
