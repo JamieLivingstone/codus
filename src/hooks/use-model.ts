@@ -20,11 +20,6 @@ export type Model = {
   variants: ModelVariant[];
 };
 
-export type ChatMessage = {
-  role: 'user' | 'assistant';
-  content: string;
-};
-
 export function useModel() {
   const { t } = useTranslation();
   const [isOllamaRunning, setIsOllamaRunning] = useState(false);
@@ -96,19 +91,12 @@ export function useModel() {
     }
   };
 
-  const sendMessage = async (messages: ChatMessage[]) => {
-    if (!activeModel) throw new Error('No active model');
-    const [modelId, parameterSize] = activeModel.split(':');
-    return invoke<ChatMessage>('chat', { modelId, parameterSize, messages });
-  };
-
   return {
     activeModel,
     deleteModel,
     downloadModel,
     isOllamaRunning,
     models,
-    sendMessage,
     setActiveModel,
   };
 }

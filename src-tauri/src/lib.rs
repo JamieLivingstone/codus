@@ -8,10 +8,10 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             encoding::decode_jwt,
-            llm::chat,
-            llm::delete_model,
-            llm::download_model,
-            llm::list_models,
+            llm::chat::send_message,
+            llm::manage_models::delete_model,
+            llm::manage_models::download_model,
+            llm::manage_models::list_models,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

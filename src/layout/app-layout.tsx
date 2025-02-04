@@ -1,19 +1,10 @@
-import {
-  Accordion,
-  ActionIcon,
-  AppShell,
-  Burger,
-  Code,
-  Group,
-  ScrollArea,
-  Text,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { Accordion, ActionIcon, AppShell, Burger, Code, Group, ScrollArea, useMantineColorScheme } from '@mantine/core';
 import { IconBrandGithub, IconHome, IconMoon, IconSearch, IconSun } from '@tabler/icons-react';
-import { Link, Outlet } from '@tanstack/react-router';
+import { Outlet } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { ActionIconLink, TextLink } from '../components/link';
 import { ModelSwitcher } from '../components/model-switcher';
 import { SpotlightSearch } from '../components/spotlight-search';
 import { toolCategories } from '../tools';
@@ -42,11 +33,9 @@ export function AppLayout({ version }: AppLayoutProps) {
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group w="33%">
             <Burger opened={mobileOpened} onClick={() => setMobileOpened((o) => !o)} hiddenFrom="sm" size="sm" />
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <Text size="xl" fw="bold">
-                Codus
-              </Text>
-            </Link>
+            <TextLink size="xl" fw="bold" to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Codus
+            </TextLink>
             <Code fw={700}>v{version}</Code>
           </Group>
 
@@ -55,9 +44,9 @@ export function AppLayout({ version }: AppLayoutProps) {
           </Group>
 
           <Group w="33%" justify="flex-end">
-            <ActionIcon variant="default" component={Link} to="/" size="lg" aria-label="Home">
+            <ActionIconLink variant="default" to="/" size="lg" aria-label="Home">
               <IconHome size="1.2rem" />
-            </ActionIcon>
+            </ActionIconLink>
             <SpotlightSearch icon={<IconSearch size="1.2rem" />} />
             <ActionIcon
               variant="default"
@@ -95,16 +84,17 @@ export function AppLayout({ version }: AppLayoutProps) {
                   {t(category.nameKey)}
                 </Accordion.Control>
                 <Accordion.Panel>
-                  {category.tools.map((tool) => (
-                    <Link
+                  {category.tools.map((tool, index) => (
+                    <TextLink
                       key={tool.id}
                       to={tool.path}
                       className={classes.toolLink}
                       activeProps={{ className: classes.toolLinkActive }}
+                      mb={index === category.tools.length - 1 ? 0 : 4}
                     >
                       <tool.icon size="1.2rem" stroke={1.5} />
                       <span>{t(tool.nameKey)}</span>
-                    </Link>
+                    </TextLink>
                   ))}
                 </Accordion.Panel>
               </Accordion.Item>

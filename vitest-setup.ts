@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest';
-import { randomFillSync } from 'node:crypto';
+import { randomFillSync, randomUUID } from 'node:crypto';
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeAll, vi } from 'vitest';
 
@@ -9,6 +9,9 @@ beforeAll(() => {
       getRandomValues: (buffer: Buffer) => {
         return randomFillSync(buffer);
       },
+      randomUUID: vi.fn().mockImplementation(() => {
+        return randomUUID();
+      }),
     },
   });
 

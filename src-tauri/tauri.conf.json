@@ -36,7 +36,7 @@
       "icons/icon.ico"
     ],
     "resources": {
-      "src/llm/available_models.json": "resources/llm/available_models.json"
+      "src/llm/manage_models/available_models.json": "resources/llm/manage_models/available_models.json"
     }
   }
 }
