@@ -16,7 +16,6 @@ export type Tool = {
   nameKey: string;
   descriptionKey: string;
   icon: React.ComponentType<IconProps>;
-  hidden?: boolean;
   path: string;
   component: AsyncRouteComponent<unknown>;
   tags: string[];
@@ -56,19 +55,9 @@ export const toolCategories: ToolCategory[] = [
         nameKey: 'tools.chat.name',
         descriptionKey: 'tools.chat.description',
         icon: IconMessage,
-        path: '/llm/chat/$chatId?',
+        path: '/llm/chat',
         component: lazyRouteComponent(() => import('./tools/llm/chat')),
         tags: ['llm', 'chat'],
-      },
-      {
-        id: 'chat-history',
-        nameKey: 'tools.chat-history.name',
-        descriptionKey: 'tools.chat-history.description',
-        icon: IconHistory,
-        hidden: true,
-        path: '/llm/chat-history',
-        component: lazyRouteComponent(() => import('./tools/llm/chat-history')),
-        tags: ['llm', 'chat', 'history'],
       },
       {
         id: 'manage-models',
