@@ -1,5 +1,13 @@
 .chatScrollArea {
+  width: 100%;
   height: calc(100vh - calc(var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) - 83px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .message {

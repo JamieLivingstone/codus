@@ -1,17 +1,4 @@
-import {
-  ActionIcon,
-  Alert,
-  Code,
-  Flex,
-  List,
-  Loader,
-  Paper,
-  ScrollArea,
-  Stack,
-  Text,
-  Textarea,
-  Title,
-} from '@mantine/core';
+import { ActionIcon, Alert, Box, Code, Flex, List, Loader, Paper, Stack, Text, Textarea, Title } from '@mantine/core';
 import { IconAlertCircle, IconRobot, IconSend, IconUser } from '@tabler/icons-react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
@@ -63,7 +50,7 @@ export default function Chat() {
     if (chatContainerRef.current && chatHistory.length > 0) {
       chatContainerRef.current.scrollTo({
         top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth',
+        behavior: 'auto',
       });
     }
   }, [chatHistory]);
@@ -135,7 +122,7 @@ export default function Chat() {
 
   return (
     <>
-      <ScrollArea scrollbarSize={0} className={classes.chatScrollArea} viewportRef={chatContainerRef}>
+      <Box className={classes.chatScrollArea} ref={chatContainerRef}>
         <Flex direction="column" w="100%" gap={0}>
           {!activeModel && (
             <Alert
@@ -157,6 +144,8 @@ export default function Chat() {
               data-role={role}
               mb={index === chatHistory.length - 1 ? 0 : 'sm'}
               miw="20%"
+              maw="100%"
+              w="fit-content"
               withBorder
             >
               <Stack gap="xs">
@@ -186,7 +175,7 @@ export default function Chat() {
             </Paper>
           ))}
         </Flex>
-      </ScrollArea>
+      </Box>
 
       <Textarea
         placeholder={t('tools.chat.input-placeholder')}
