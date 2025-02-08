@@ -1,10 +1,25 @@
-import { ActionIcon, Alert, Box, Code, Flex, List, Loader, Paper, Stack, Text, Textarea, Title } from '@mantine/core';
+import { CodeHighlight } from '@mantine/code-highlight';
+import {
+  ActionIcon,
+  Alert,
+  Anchor,
+  Box,
+  Code,
+  Flex,
+  List,
+  Loader,
+  Paper,
+  Stack,
+  Text,
+  Textarea,
+  Title,
+} from '@mantine/core';
 import { IconAlertCircle, IconRobot, IconSend, IconUser } from '@tabler/icons-react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
-import Markdown from 'markdown-to-jsx';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ReactMarkdown from 'react-markdown';
 
 import { useModelContext } from '../../hooks/use-model';
 import classes from './chat.module.css';
@@ -19,21 +34,6 @@ const INITIAL_MESSAGE = {
   id: crypto.randomUUID(),
   role: 'assistant' as const,
   content: 'tools.chat.welcome-message',
-};
-
-const MARKDOWN_COMPONENTS = {
-  p: { component: Text },
-  ul: { component: List },
-  ol: { component: List, props: { type: 'ordered' } },
-  li: { component: List.Item },
-  h1: { component: Title, props: { order: 1 } },
-  h2: { component: Title, props: { order: 2 } },
-  h3: { component: Title, props: { order: 3 } },
-  h4: { component: Title, props: { order: 4 } },
-  h5: { component: Title, props: { order: 5 } },
-  h6: { component: Title, props: { order: 6 } },
-  code: { component: Code, props: { p: 0 } },
-  pre: { component: Code, props: { block: true } },
 };
 
 export default function Chat() {
@@ -74,17 +74,9 @@ export default function Chat() {
   const sendMessage = async () => {
     if (!activeModel || !inputMessage.trim()) return;
 
-    const responseMessageId = crypto.randomUUID();
-    const userMessage: ChatMessage = {
-      id: crypto.randomUUID(),
-      content: inputMessage.trim(),
-      role: 'user',
-    };
-    const assistantMessage: ChatMessage = {
-      id: responseMessageId,
-      content: '',
-      role: 'assistant',
-    };
+    const messageId = crypto.randomUUID();
+    const userMessage = { id: crypto.randomUUID(), content: inputMessage.trim(), role: 'user' as const };
+    const assistantMessage = { id: messageId, content: '', role: 'assistant' as const };
 
     setInputMessage('');
     setIsLoading(true);
@@ -92,10 +84,10 @@ export default function Chat() {
 
     try {
       const [modelId, parameterSize] = activeModel.split(':');
-      const response = await invoke<{ content: string; role: 'assistant' }>('send_message', {
+      const response = await invoke<{ content: string }>('send_message', {
         modelId,
         parameterSize,
-        messageId: responseMessageId,
+        messageId,
         messages: [...chatHistory.slice(1), userMessage].map(({ content, role }) => ({ content, role })),
       });
 
@@ -103,7 +95,7 @@ export default function Chat() {
         ...messages.slice(0, -1),
         { ...messages[messages.length - 1], content: response.content },
       ]);
-    } catch (error) {
+    } catch {
       setChatHistory((messages) => [
         ...messages.slice(0, -1),
         { ...messages[messages.length - 1], content: t('tools.chat.error-sending-message') },
@@ -143,7 +135,6 @@ export default function Chat() {
               className={classes.message}
               data-role={role}
               mb={index === chatHistory.length - 1 ? 0 : 'sm'}
-              miw="20%"
               maw="100%"
               w="fit-content"
               withBorder
@@ -159,17 +150,55 @@ export default function Chat() {
                     {role === 'assistant' ? t('tools.chat.assistant') : t('tools.chat.you')}
                   </Text>
                 </Flex>
-                {isLoading && role === 'assistant' && content === '' ? (
+                {isLoading && role === 'assistant' && !content ? (
                   <Loader type="dots" size="sm" />
                 ) : (
-                  <Markdown
-                    options={{
-                      overrides: MARKDOWN_COMPONENTS,
-                      wrapper: Stack,
-                    }}
-                  >
-                    {content}
-                  </Markdown>
+                  <Stack>
+                    <ReactMarkdown
+                      components={{
+                        a: ({ children, href, ...props }) => (
+                          <Anchor
+                            className={classes.link}
+                            href={href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            {...props}
+                          >
+                            {children}
+                          </Anchor>
+                        ),
+                        p: Text,
+                        ul: List,
+                        ol: ({ children }) => <List type="ordered">{children}</List>,
+                        li: List.Item,
+                        h1: ({ children }) => <Title order={1}>{children}</Title>,
+                        h2: ({ children }) => <Title order={2}>{children}</Title>,
+                        h3: ({ children }) => <Title order={3}>{children}</Title>,
+                        h4: ({ children }) => <Title order={4}>{children}</Title>,
+                        h5: ({ children }) => <Title order={5}>{children}</Title>,
+                        h6: ({ children }) => <Title order={6}>{children}</Title>,
+                        code(props) {
+                          const { children, className, node, ...rest } = props;
+                          const match = /language-(\w+)/.exec(className || '');
+                          return match ? (
+                            <CodeHighlight
+                              className={classes.codeHighlight}
+                              language={match[1]}
+                              code={String(children).replace(/\n$/, '')}
+                              copyLabel={t('common.copy')}
+                              copiedLabel={t('common.copied')}
+                            />
+                          ) : (
+                            <Code {...rest} className={className}>
+                              {children}
+                            </Code>
+                          );
+                        },
+                      }}
+                    >
+                      {content}
+                    </ReactMarkdown>
+                  </Stack>
                 )}
               </Stack>
             </Paper>

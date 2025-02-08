@@ -10,6 +10,10 @@
   }
 }
 
+.link {
+  text-decoration: underline;
+}
+
 .message {
   min-width: 20%;
 }
@@ -30,4 +34,12 @@
 
 .userIcon {
   color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-4));
+}
+
+.codeHighlight {
+  border-radius: var(--mantine-radius-md);
+}
+
+pre {
+  margin: 0;
 }

@@ -86,6 +86,11 @@ export function useModel() {
     try {
       await invoke('download_model', { modelId, parameterSize });
       updateModelVariant(modelId, parameterSize, true);
+      notifications.show({
+        title: t('hooks.use-model.download-model-success-title'),
+        message: t('hooks.use-model.download-model-success-message'),
+        color: 'green',
+      });
     } catch {
       showError();
     }

@@ -3,12 +3,16 @@
     "clear": "Clear",
     "delete": "Delete",
     "download": "Download",
-    "paste": "Paste"
+    "paste": "Paste",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "hooks": {
     "use-model": {
       "failed-ollama-action-title": "Failed to perform action",
-      "failed-ollama-action-message": "Please ensure Ollama is running"
+      "failed-ollama-action-message": "Please ensure Ollama is running",
+      "download-model-success-title": "Model downloaded",
+      "download-model-success-message": "Model downloaded successfully"
     }
   },
   "components": {
@@ -27,7 +31,7 @@
       "name": "Encoders / Decoders"
     },
     "llm": {
-      "name": "LLM"
+      "name": "Language Models"
     }
   },
   "tools": {
