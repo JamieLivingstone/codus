@@ -50,7 +50,6 @@ async function customRender(
             isOllamaRunning: true,
             models: Object.fromEntries(mockModels.map((model) => [model.id, model])),
             setActiveModel: vi.fn(),
-            sendMessage: vi.fn(),
             ...overrides?.modelContext,
           }}
         >

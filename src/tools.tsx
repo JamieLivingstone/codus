@@ -1,12 +1,4 @@
-import {
-  IconBraces,
-  IconBrain,
-  IconDownload,
-  IconHistory,
-  IconKey,
-  IconMessage,
-  type IconProps,
-} from '@tabler/icons-react';
+import { IconBraces, IconBrain, IconDownload, IconKey, IconMessage, type IconProps } from '@tabler/icons-react';
 import { type AsyncRouteComponent, lazyRouteComponent } from '@tanstack/react-router';
 
 import { OllamaServiceGuard } from './tools/llm/ollama-service-guard';
