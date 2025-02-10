@@ -39,6 +39,10 @@ jobs:
         working-directory: ./src-tauri
     steps:
       - uses: actions/checkout@v4
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglib2.0-dev
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - run: cargo test --all-features
 
@@ -50,6 +54,10 @@ jobs:
         working-directory: ./src-tauri
     steps:
       - uses: actions/checkout@v4
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libglib2.0-dev
       - uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
           components: rustfmt
