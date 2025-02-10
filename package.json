@@ -24,6 +24,7 @@
     "@tauri-apps/api": "^2.2.0",
     "@tauri-apps/plugin-clipboard-manager": "^2.2.0",
     "@tauri-apps/plugin-opener": "^2.2.5",
+    "@tauri-apps/plugin-updater": "^2.5.0",
     "i18next": "^24.2.2",
     "i18next-http-backend": "^3.0.2",
     "react": "^19.0.0",
