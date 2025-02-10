@@ -34,6 +34,9 @@ jobs:
   rust-tests:
     name: cargo test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src-tauri
     steps:
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -42,6 +45,9 @@ jobs:
   rust-formatting:
     name: cargo fmt
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src-tauri
     steps:
       - uses: actions/checkout@v4
       - uses: actions-rust-lang/setup-rust-toolchain@v1
