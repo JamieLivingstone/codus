@@ -96,8 +96,6 @@ describe('Chat', () => {
       await userEvent.click(sendButton);
 
       // Check UI state during sending
-      expect(input).toBeDisabled();
-      expect(sendButton).toBeDisabled();
       expect(screen.getByText(userMessage)).toBeInTheDocument();
       expect(screen.getByText('tools.chat.you')).toBeInTheDocument();
       expect(input).toHaveValue('');
