@@ -2,7 +2,6 @@ import { Box, Card, Group, SimpleGrid, Text, rem } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { AnchorLink } from '../components/link';
 import { tools } from '../tools';
 import styles from './all-tools.module.css';
 
@@ -17,9 +16,9 @@ export function AllTools() {
             <tool.icon style={{ width: rem(48), height: rem(48) }} stroke={1.5} />
 
             <Box>
-              <AnchorLink size="lg" fw={600} to={tool.path} style={{ color: 'inherit', textDecoration: 'none' }}>
+              <Text size="lg" fw={600}>
                 {t(tool.nameKey)}
-              </AnchorLink>
+              </Text>
 
               <Text fz="sm" c="dimmed" lineClamp={1}>
                 {t(tool.descriptionKey)}
