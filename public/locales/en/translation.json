@@ -32,6 +32,9 @@
     },
     "llm": {
       "name": "Language Models"
+    },
+    "text": {
+      "name": "Text"
     }
   },
   "tools": {
@@ -57,6 +60,11 @@
       "name": "Manage Models",
       "description": "Manage your downloaded models",
       "select-variant": "Select variant"
+    },
+    "markdown-editor": {
+      "name": "Markdown Editor",
+      "description": "Edit Markdown content",
+      "input-placeholder": "Write your markdown here..."
     },
     "ollama-not-running": {
       "title": "Ollama is not running",

@@ -1,4 +1,13 @@
-import { IconBraces, IconBrain, IconDownload, IconKey, IconMessage, type IconProps } from '@tabler/icons-react';
+import {
+  IconBraces,
+  IconBrain,
+  IconDownload,
+  IconKey,
+  IconMarkdown,
+  IconMessage,
+  type IconProps,
+  IconTypography,
+} from '@tabler/icons-react';
 import { type AsyncRouteComponent, lazyRouteComponent } from '@tanstack/react-router';
 
 import { OllamaServiceGuard } from './tools/llm/ollama-service-guard';
@@ -70,6 +79,22 @@ export const toolCategories: ToolCategory[] = [
           })),
         ),
         tags: ['llm', 'model', 'download'],
+      },
+    ],
+  },
+  {
+    id: 'text',
+    nameKey: 'categories.text.name',
+    icon: IconTypography,
+    tools: [
+      {
+        id: 'markdown-editor',
+        nameKey: 'tools.markdown-editor.name',
+        descriptionKey: 'tools.markdown-editor.description',
+        icon: IconMarkdown,
+        path: '/text/markdown-editor',
+        component: lazyRouteComponent(() => import('./tools/text/markdown-editor')),
+        tags: ['text', 'markdown', 'editor'],
       },
     ],
   },
