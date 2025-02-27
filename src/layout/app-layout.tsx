@@ -45,9 +45,9 @@ export function AppLayout({ version }: AppLayoutProps) {
 
           <Group w="33%" justify="flex-end">
             <ActionIconLink variant="default" to="/" size="lg" aria-label="Home">
-              <IconHome size="1.2rem" />
+              <IconHome size={20} />
             </ActionIconLink>
-            <SpotlightSearch icon={<IconSearch size="1.2rem" />} />
+            <SpotlightSearch icon={<IconSearch size={20} />} />
             <ActionIcon
               variant="default"
               onClick={() => toggleColorScheme()}
@@ -55,9 +55,9 @@ export function AppLayout({ version }: AppLayoutProps) {
               aria-label="Toggle color scheme"
             >
               {colorScheme === 'dark' ? (
-                <IconSun data-testid="toggle-light" size="1.2rem" />
+                <IconSun data-testid="toggle-light" size={20} />
               ) : (
-                <IconMoon data-testid="toggle-dark" size="1.2rem" />
+                <IconMoon data-testid="toggle-dark" size={20} />
               )}
             </ActionIcon>
             <ActionIcon
@@ -69,7 +69,7 @@ export function AppLayout({ version }: AppLayoutProps) {
               size="lg"
               aria-label="GitHub repository"
             >
-              <IconBrandGithub size="1.2rem" />
+              <IconBrandGithub size={20} />
             </ActionIcon>
           </Group>
         </Group>
@@ -80,7 +80,7 @@ export function AppLayout({ version }: AppLayoutProps) {
           <Accordion chevronPosition="right" chevronSize={14} classNames={{ chevron: classes.chevron }}>
             {toolCategories.map((category) => (
               <Accordion.Item key={category.id} value={category.id}>
-                <Accordion.Control icon={<category.icon size="1.2rem" stroke={1.5} />}>
+                <Accordion.Control icon={<category.icon size={22} stroke={1.5} />}>
                   {t(category.nameKey)}
                 </Accordion.Control>
                 <Accordion.Panel>
@@ -92,7 +92,7 @@ export function AppLayout({ version }: AppLayoutProps) {
                       activeProps={{ className: classes.toolLinkActive }}
                       mb={index === category.tools.length - 1 ? 0 : 4}
                     >
-                      <tool.icon size="1.2rem" stroke={1.5} />
+                      <tool.icon size={22} stroke={1.5} />
                       <span>{t(tool.nameKey)}</span>
                     </TextLink>
                   ))}

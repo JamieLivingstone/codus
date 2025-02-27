@@ -16,6 +16,15 @@
     }
   },
   "components": {
+    "ai-generator": {
+      "accept": "Accept",
+      "amend-prompt": "Amend prompt",
+      "generate": "Generate",
+      "generate-with-ai": "Generate with AI",
+      "generated-content-placeholder": "Generated content...",
+      "no-model-selected-warning-message": "Please select a model to use the AI generator",
+      "prompt-placeholder": "Enter your prompt..."
+    },
     "model-switcher": {
       "select-model": "Select a model",
       "select-model-placeholder": "Select active model",
@@ -32,6 +41,9 @@
     },
     "llm": {
       "name": "Language Models"
+    },
+    "text": {
+      "name": "Text"
     }
   },
   "tools": {
@@ -57,6 +69,11 @@
       "name": "Manage Models",
       "description": "Manage your downloaded models",
       "select-variant": "Select variant"
+    },
+    "markdown-editor": {
+      "name": "Markdown Editor",
+      "description": "Create and preview markdown documents in real-time",
+      "input-placeholder": "Write your markdown here..."
     },
     "ollama-not-running": {
       "title": "Ollama is not running",
