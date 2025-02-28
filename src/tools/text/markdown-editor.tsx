@@ -1,9 +1,9 @@
-import { ActionIcon, Box, CopyButton, Flex, Group, Paper, Textarea, Tooltip } from '@mantine/core';
-import { IconCheck, IconCopy } from '@tabler/icons-react';
+import { Box, Flex, Group, Paper, Textarea } from '@mantine/core';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AIGenerator } from '../../components/ai-generator';
+import { CopyButton } from '../../components/copy-button';
 import { Markdown } from '../../components/markdown';
 
 export default function MarkdownEditor() {
@@ -23,16 +23,7 @@ export default function MarkdownEditor() {
       <Paper shadow="sm" p="0" flex={1} h="100%">
         <Box pos="relative" h="100%">
           <Group gap={1} style={{ position: 'absolute', top: 8, right: 14, zIndex: 2 }}>
-            <CopyButton value={markdownContent} timeout={2000}>
-              {({ copied, copy }) => (
-                <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position="left">
-                  <ActionIcon color={copied ? 'teal' : 'gray'} variant="subtle" onClick={copy}>
-                    {copied ? <IconCheck size={16} /> : <IconCopy size={16} />}
-                  </ActionIcon>
-                </Tooltip>
-              )}
-            </CopyButton>
-
+            <CopyButton value={markdownContent} />
             <AIGenerator
               context={`You are a markdown editor. You are given a markdown document and you need to edit it. The document is: ${markdownContent}. Only output the markdown content, no other text.`}
               onAccept={(content) => setMarkdownContent(processAIGeneratorOutput(content))}

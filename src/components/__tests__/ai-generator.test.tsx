@@ -83,7 +83,7 @@ describe('AIGenerator', () => {
     });
 
     // Click generate button
-    fireEvent.click(screen.getByRole('button', { name: 'components.ai-generator.generate' }));
+    fireEvent.click(screen.getByRole('button', { name: 'common.generate' }));
 
     // Verify invoke call
     await waitFor(() => {

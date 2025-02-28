@@ -21,6 +21,7 @@ use tokio_stream::StreamExt;
 /// * `Err(String)` with error message if download failed
 ///
 /// ```
+
 #[tauri::command]
 pub async fn download_model(
     handle: tauri::AppHandle,
