@@ -1,8 +1,8 @@
 [package]
-name = "codus"
+name = "Codus"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A privacy-first developer productivity tool with offline AI models and a suite of essential dev tools for everyday tasks."
+authors = ["Jamie Livingstone"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
