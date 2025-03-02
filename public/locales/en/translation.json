@@ -3,6 +3,7 @@
     "clear": "Clear",
     "delete": "Delete",
     "download": "Download",
+    "generate": "Generate",
     "paste": "Paste",
     "copy": "Copy",
     "copied": "Copied"
@@ -19,7 +20,6 @@
     "ai-generator": {
       "accept": "Accept",
       "amend-prompt": "Amend prompt",
-      "generate": "Generate",
       "generate-with-ai": "Generate with AI",
       "generated-content-placeholder": "Generated content...",
       "no-model-selected-warning-message": "Please select a model to use the AI generator",
@@ -38,6 +38,9 @@
   "categories": {
     "encoding": {
       "name": "Encoders / Decoders"
+    },
+    "generators": {
+      "name": "Generators"
     },
     "llm": {
       "name": "Language Models"
@@ -78,6 +81,17 @@
     "ollama-not-running": {
       "title": "Ollama is not running",
       "message": "Please ensure Ollama is running on port 11434. It can take up to 30 seconds after opening for this screen to disappear."
+    },
+    "uuid-generator": {
+      "name": "UUID Generator",
+      "description": "Generate UUIDs",
+      "count": "Number of UUIDs",
+      "version": "UUID Version",
+      "v4": "V4 (Random)",
+      "v7": "V7 (Time-based)",
+      "uppercase": "Uppercase",
+      "hyphens": "Include hyphens",
+      "results": "Results"
     }
   }
 }

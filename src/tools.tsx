@@ -2,10 +2,12 @@ import {
   IconBraces,
   IconBrain,
   IconDownload,
+  IconHash,
   IconKey,
   IconMarkdown,
   IconMessage,
   type IconProps,
+  IconRefresh,
   IconTypography,
 } from '@tabler/icons-react';
 import { type AsyncRouteComponent, lazyRouteComponent } from '@tanstack/react-router';
@@ -43,6 +45,22 @@ export const toolCategories: ToolCategory[] = [
         path: '/encoding/jwt-decoder',
         component: lazyRouteComponent(() => import('./tools/encoding/jwt-decoder')),
         tags: ['jwt', 'json web token', 'decode'],
+      },
+    ],
+  },
+  {
+    id: 'generators',
+    nameKey: 'categories.generators.name',
+    icon: IconRefresh,
+    tools: [
+      {
+        id: 'uuid-generator',
+        nameKey: 'tools.uuid-generator.name',
+        descriptionKey: 'tools.uuid-generator.description',
+        icon: IconHash,
+        path: '/generators/uuid-generator',
+        component: lazyRouteComponent(() => import('./tools/generators/uuid-generator')),
+        tags: ['uuid', 'generator', 'unique identifier'],
       },
     ],
   },

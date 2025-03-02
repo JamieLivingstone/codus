@@ -1,4 +1,5 @@
 mod encoding;
+mod generators;
 mod llm;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -9,6 +10,7 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![
             encoding::decode_jwt,
+            generators::generate_uuid,
             llm::chat::send_message,
             llm::manage_models::delete_model,
             llm::manage_models::download_model,

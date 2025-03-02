@@ -140,7 +140,7 @@ export function AIGenerator({ context, onAccept }: AIGeneratorProps) {
                     disabled={!prompt.trim()}
                     fullWidth
                   >
-                    {t('components.ai-generator.generate')}
+                    {t('common.generate')}
                   </Button>
                 </>
               ) : (

@@ -22,6 +22,7 @@ use tauri::Manager;
 /// * `Err(String)` with error message if loading/parsing fails
 ///
 /// ```
+
 #[tauri::command]
 pub async fn list_models(handle: tauri::AppHandle) -> Result<Vec<Model>, String> {
     let ollama = Ollama::default();

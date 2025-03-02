@@ -11,6 +11,7 @@ use ollama_rs::Ollama;
 /// * `Err(String)` with error message if deletion failed
 ///
 /// ```
+
 #[tauri::command]
 pub async fn delete_model(model_id: String, parameter_size: String) -> Result<(), String> {
     let ollama = Ollama::default();
