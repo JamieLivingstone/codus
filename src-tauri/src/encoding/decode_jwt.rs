@@ -14,6 +14,20 @@ pub struct DecodedJwt {
     claims: Claims,
 }
 
+/// Decodes a JWT token without verifying its signature.
+///
+/// This function parses a JWT token string and extracts its header and claims
+/// without validating the signature. It's useful for inspecting token contents
+/// but should not be used for authentication purposes.
+///
+/// # Arguments
+/// * `token` - A string slice containing the JWT token to decode
+///
+/// # Returns
+/// * `Ok(DecodedJwt)` - A struct containing the decoded header and claims
+/// * `Err(String)` - An error message if decoding fails
+///
+/// ```
 #[tauri::command]
 pub fn decode_jwt(token: &str) -> Result<DecodedJwt, String> {
     let parsed_token = Token::<Header, Claims, Unverified>::parse_unverified(token)

@@ -19,6 +19,8 @@ use tokio_stream::StreamExt;
 ///
 /// # Returns
 /// * `Result<ChatMessage, String>` - Complete response or error
+///
+
 #[tauri::command]
 pub async fn send_message(
     app_handle: AppHandle,
