@@ -3,6 +3,27 @@
 version = 3
 
 [[package]]
+name = "Codus"
+version = "0.1.0"
+dependencies = [
+ "hmac",
+ "jwt",
+ "ollama-rs",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-clipboard-manager",
+ "tauri-plugin-opener",
+ "tauri-plugin-updater",
+ "tempfile",
+ "tokio",
+ "tokio-stream",
+ "uuid",
+]
+
+[[package]]
 name = "addr2line"
 version = "0.24.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -621,27 +642,6 @@ dependencies = [
  "core-graphics-types 0.2.0",
  "libc",
  "objc",
-]
-
-[[package]]
-name = "codus"
-version = "0.1.0"
-dependencies = [
- "hmac",
- "jwt",
- "ollama-rs",
- "serde",
- "serde_json",
- "sha2",
- "tauri",
- "tauri-build",
- "tauri-plugin-clipboard-manager",
- "tauri-plugin-opener",
- "tauri-plugin-updater",
- "tempfile",
- "tokio",
- "tokio-stream",
- "uuid",
 ]
 
 [[package]]
