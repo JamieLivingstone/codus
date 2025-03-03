@@ -33,11 +33,13 @@ export function useModel() {
         setIsOllamaRunning(response.status === 200);
       } catch {
         setIsOllamaRunning(false);
+        setActiveModel(null);
+        setModels({});
       }
     };
 
     checkOllama();
-    const interval = setInterval(checkOllama, isOllamaRunning ? 60000 : 10000);
+    const interval = setInterval(checkOllama, isOllamaRunning ? 30000 : 5000);
     return () => clearInterval(interval);
   }, [isOllamaRunning]);
 

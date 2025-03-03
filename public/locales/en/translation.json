@@ -28,7 +28,8 @@
     "model-switcher": {
       "select-model": "Select a model",
       "select-model-placeholder": "Select active model",
-      "select-model-variant-no-results": "No models downloaded - download one in Manage Models"
+      "select-model-variant-no-search-results": "No downloaded models found - please download one in Manage Models",
+      "select-model-variant-ollama-not-running": "Ollama is not running - unable to access downloaded models"
     },
     "spotlight-search": {
       "placeholder": "Search...",
