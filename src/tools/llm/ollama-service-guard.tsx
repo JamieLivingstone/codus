@@ -16,7 +16,7 @@ export function OllamaServiceGuard({ children }: OllamaServiceGuardProps) {
   }
 
   return (
-    <Stack align="center" justify="center" h="100%">
+    <Stack align="center" justify="center">
       <Box w={120} h={120} mb="xl">
         <OllamaLogo />
       </Box>

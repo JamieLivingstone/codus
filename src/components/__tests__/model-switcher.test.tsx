@@ -5,14 +5,14 @@ import { ModelSwitcher } from '../model-switcher';
 describe('ModelSwitcher', () => {
   const getModelSwitcher = () => screen.getByPlaceholderText('components.model-switcher.select-model-placeholder');
 
-  test('is disabled when ollama is not running', async () => {
-    await render(<ModelSwitcher />, { modelContext: { isOllamaRunning: false } });
-    expect(getModelSwitcher()).toBeDisabled();
+  test('displays ollama not running message when ollama is not running', async () => {
+    await render(<ModelSwitcher />, { modelContext: { activeModel: null, models: {}, isOllamaRunning: false } });
+    expect(screen.getByText('components.model-switcher.select-model-variant-ollama-not-running')).toBeInTheDocument();
   });
 
-  test('is enabled when ollama is running', async () => {
-    await render(<ModelSwitcher />, { modelContext: { isOllamaRunning: true } });
-    expect(getModelSwitcher()).toBeEnabled();
+  test('displays no results message when no models are available', async () => {
+    await render(<ModelSwitcher />, { modelContext: { activeModel: null, models: {}, isOllamaRunning: true } });
+    expect(screen.getByText('components.model-switcher.select-model-variant-no-search-results')).toBeInTheDocument();
   });
 
   test('displays available models and triggers selection callback', async () => {

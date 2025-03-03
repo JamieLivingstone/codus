@@ -1,4 +1,4 @@
-import { Popover, Select } from '@mantine/core';
+import { Select } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { useModelContext } from '../hooks/use-model';
 
@@ -19,25 +19,23 @@ export function ModelSwitcher() {
   }, []);
 
   return (
-    <Popover disabled={isOllamaRunning} position="bottom" withArrow>
-      <Popover.Target>
-        <Select
-          allowDeselect={false}
-          clearable={false}
-          data={downloadedModels}
-          disabled={!isOllamaRunning}
-          nothingFoundMessage={t('components.model-switcher.select-model-variant-no-results')}
-          placeholder={t('components.model-switcher.select-model-placeholder')}
-          searchable
-          value={activeModel}
-          onChange={(value) => setActiveModel(value as `${string}:${string}`)}
-          styles={{
-            input: { cursor: 'pointer', margin: 0, textAlign: 'center', width: '250px' },
-            wrapper: { margin: 0 },
-          }}
-        />
-      </Popover.Target>
-      <Popover.Dropdown>{t('common.ollama-not-running')}</Popover.Dropdown>
-    </Popover>
+    <Select
+      allowDeselect={false}
+      clearable={false}
+      data={downloadedModels}
+      nothingFoundMessage={t(
+        isOllamaRunning
+          ? 'components.model-switcher.select-model-variant-no-search-results'
+          : 'components.model-switcher.select-model-variant-ollama-not-running',
+      )}
+      placeholder={t('components.model-switcher.select-model-placeholder')}
+      searchable
+      value={activeModel}
+      onChange={(value) => setActiveModel(value as `${string}:${string}`)}
+      styles={{
+        input: { cursor: 'pointer', margin: 0, textAlign: 'center', width: '250px' },
+        wrapper: { margin: 0 },
+      }}
+    />
   );
 }
