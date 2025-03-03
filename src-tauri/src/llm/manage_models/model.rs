@@ -45,7 +45,6 @@ pub struct ModelAuthor {
     pub name: String,
     pub url: String,
 }
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -59,7 +58,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_from_json_valid() {
+    async fn test_parses_valid_json_successfully() {
         let json = r#"{
             "models": [{
                 "id": "llama2",
@@ -88,7 +87,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_from_json_missing_models_key() {
+    async fn test_returns_error_when_models_key_missing() {
         let temp_file = create_test_file(r#"{ "wrong_key": [] }"#);
         let result = Model::from_json(temp_file.path().to_path_buf()).await;
 
@@ -97,7 +96,7 @@ mod tests {
     }
 
     #[tokio::test]
-    async fn test_from_json_invalid_file() {
+    async fn test_returns_error_for_nonexistent_file() {
         let result = Model::from_json(PathBuf::from("nonexistent.json")).await;
         assert!(result.is_err());
         assert!(result

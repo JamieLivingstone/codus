@@ -1,6 +1,7 @@
 mod encoding;
 mod generators;
 mod llm;
+mod text;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -15,6 +16,7 @@ pub fn run() {
             llm::manage_models::delete_model,
             llm::manage_models::download_model,
             llm::manage_models::list_models,
+            text::compare_text::compare_text,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
