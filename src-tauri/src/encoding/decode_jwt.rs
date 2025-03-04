@@ -91,14 +91,14 @@ mod tests {
     }
 
     #[test]
-    fn test_given_an_invalid_token_returns_error() {
+    fn test_returns_error_for_malformed_token() {
         let result = decode_jwt("invalid.token");
         assert!(result.is_err());
         assert_eq!(result.err().unwrap(), "Failed to decode JWT token. Please check that the token is valid and properly formatted. Error: No signature component found in token string");
     }
 
     #[test]
-    fn test_given_a_valid_token_returns_decoded_jwt() {
+    fn test_extracts_header_and_claims_from_valid_token() {
         let token = create_valid_token();
         let decoded = decode_jwt(&token).expect("Invalid JWT");
 
