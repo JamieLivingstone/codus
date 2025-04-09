@@ -6,7 +6,8 @@
     "generate": "Generate",
     "paste": "Paste",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "results": "Results"
   },
   "hooks": {
     "use-model": {
@@ -69,6 +70,15 @@
       "header": "Header",
       "claims": "Claims"
     },
+    "lipsum-generator": {
+      "name": "Lorem Ipsum Generator",
+      "description": "Generate Lorem Ipsum text",
+      "count": "Count",
+      "words": "Words",
+      "sentences": "Sentences",
+      "paragraphs": "Paragraphs",
+      "type": "Type"
+    },
     "manage-models": {
       "name": "Manage Models",
       "description": "Manage your downloaded models",
@@ -91,8 +101,7 @@
       "v4": "V4 (Random)",
       "v7": "V7 (Time-based)",
       "uppercase": "Uppercase",
-      "hyphens": "Include hyphens",
-      "results": "Results"
+      "hyphens": "Include hyphens"
     }
   }
 }

@@ -10,7 +10,7 @@ type UuidVersion = 'V4' | 'V7';
 
 export default function UuidGenerator() {
   const { t } = useTranslation();
-  const [count, setCount] = useState<number>(10);
+  const [count, setCount] = useState<number>(50);
   const [version, setVersion] = useState<UuidVersion>('V4');
   const [uppercase, setUppercase] = useState<boolean>(true);
   const [hyphens, setHyphens] = useState<boolean>(true);
@@ -36,7 +36,7 @@ export default function UuidGenerator() {
   }, []);
 
   return (
-    <Stack gap="md">
+    <Stack gap="md" h="100%">
       <Title order={2}>{t('tools.uuid-generator.name')}</Title>
 
       <Group align="flex-end">
@@ -83,24 +83,22 @@ export default function UuidGenerator() {
       </Group>
 
       {uuids.length > 0 && (
-        <Stack gap="xs">
-          <Text fw={500}>{t('tools.uuid-generator.results')}</Text>
-          <Box pos="relative">
+        <Stack gap="xs" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <Group justify="space-between">
+            <Text fw={500}>{t('common.results')}</Text>
+            <CopyButton value={uuids.join('\n')} />
+          </Group>
+          <Box style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             <Textarea
               data-testid="generated-uuids"
               value={uuids.join('\n')}
               readOnly
-              minRows={Math.min(10, uuids.length)}
-              maxRows={20}
               styles={{
-                input: {
-                  minHeight: '300px',
-                },
+                root: { display: 'flex', flexDirection: 'column', flex: 1 },
+                wrapper: { flex: 1, display: 'flex', flexDirection: 'column' },
+                input: { flex: 1 },
               }}
             />
-            <Box style={{ position: 'absolute', top: '10px', right: '10px' }}>
-              <CopyButton value={uuids.join('\n')} />
-            </Box>
           </Box>
         </Stack>
       )}

@@ -25,7 +25,7 @@ describe('UUIDGenerator', () => {
     await render(<UuidGenerator />);
 
     expect(invoke).toHaveBeenCalledWith('generate_uuid', {
-      numberOfUuids: 10,
+      numberOfUuids: 50,
       hyphens: true,
       uppercase: true,
       version: 'V4',
@@ -44,7 +44,7 @@ describe('UUIDGenerator', () => {
     const generateButton = screen.getByText('common.generate');
 
     // Verify default values
-    expect(numberOfUuidsInput).toHaveValue('10');
+    expect(numberOfUuidsInput).toHaveValue('50');
     expect(hyphensCheckbox).toBeChecked();
     expect(uppercaseCheckbox).toBeChecked();
 
