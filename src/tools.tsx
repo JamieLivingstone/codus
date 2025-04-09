@@ -4,6 +4,7 @@ import {
   IconDownload,
   IconHash,
   IconKey,
+  IconLetterT,
   IconMarkdown,
   IconMessage,
   type IconProps,
@@ -53,6 +54,15 @@ export const toolCategories: ToolCategory[] = [
     nameKey: 'categories.generators.name',
     icon: IconRefresh,
     tools: [
+      {
+        id: 'lipsum-generator',
+        nameKey: 'tools.lipsum-generator.name',
+        descriptionKey: 'tools.lipsum-generator.description',
+        icon: IconLetterT,
+        path: '/generators/lipsum-generator',
+        component: lazyRouteComponent(() => import('./tools/generators/lipsum-generator')),
+        tags: ['lipsum', 'generator', 'lorem ipsum'],
+      },
       {
         id: 'uuid-generator',
         nameKey: 'tools.uuid-generator.name',
